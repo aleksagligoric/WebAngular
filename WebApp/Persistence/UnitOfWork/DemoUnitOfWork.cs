@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Unity;
+using WebApp.Models;
 using WebApp.Persistence.Repository;
 
 namespace WebApp.Persistence.UnitOfWork
@@ -11,31 +12,41 @@ namespace WebApp.Persistence.UnitOfWork
     public class DemoUnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
-      
+
         public DemoUnitOfWork(DbContext context)
         {
             _context = context;
         }
 
-        //[Dependency]
-        //instanca interfejsa
         [Dependency]
-        IRepositoryVozlio IUnitOfWork.Vozilo { get; set; }
+        public IRepositoryDayType RepositoryDayTypes { get; set; }
+
         [Dependency]
-        IRepositoryVozlio IUnitOfWork.Vozila { get; set; }
+        public IRepositoryLine RepositoryLines { get; set; }
+
         [Dependency]
-        IRepositoryCenaKarte IUnitOfWork.CenaKarte { get; set; }
+        public IRepositoryPricelist RepositoryPricelists { get; set; }
+
         [Dependency]
-        IRepositoryCenovnik IUnitOfWork.Cenovnik { get; set; }
+        public IRepositoryStation RepositoryStations { get; set; }
+
         [Dependency]
-        IRepositoryKarta IUnitOfWork.Karta { get; set; }
+        public IRepositoryTicketPrice RepositoryTicketPrices { get; set; }
+
         [Dependency]
-        IRepositoryLinija IUnitOfWork.Linija { get; set; }
+        public IRepositoryTicketType RepositoryTicketTypes { get; set; }
+
         [Dependency]
-        IRepositoryRedVoznje IUnitOfWork.RedVoznje { get; set; }
+        public IRepositoryTimetable RepositoryTimetables { get; set; }
+
         [Dependency]
-        IRepositoryStanica IUnitOfWork.Stanica { get; set; }
-        
+        public IRepositoryTimetableType RepositoryTimetableTypes { get; set; }
+
+        [Dependency]
+        public IRepositoryUserType RepositoryUserTypes { get; set; }
+
+        [Dependency]
+        public IRepositoryVehicle RepositoryVehicles { get; set; }
 
         public int Complete()
         {

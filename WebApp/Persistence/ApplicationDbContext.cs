@@ -11,13 +11,13 @@ namespace WebApp.Persistence
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Vozilo> Vozila { get; set; }
-        public DbSet<Karta> Karte { get; set; }
-        public DbSet<Cenovnik> Cenovnici { get; set; }
-        public DbSet<CenaKarte> CeneKarti { get; set; }
-        public DbSet<Stanica> Stanice { get; set; }
-        public DbSet<RedVoznje> RedoviVoznje { get; set; }
-        public DbSet<Linija> Linije { get; set; }
+        public DbSet<Vehicle> Vozila { get; set; }
+        public DbSet<Ticket> Karte { get; set; }
+        public DbSet<Pricelist> Cenovnici { get; set; }
+        public DbSet<TicketPrice> CeneKarti { get; set; }
+        public DbSet<Station> Stanice { get; set; }
+        public DbSet<Timetable> RedoviVoznje { get; set; }
+        public DbSet<Line> Linije { get; set; }
 
 
         public ApplicationDbContext()
