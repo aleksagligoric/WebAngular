@@ -16,7 +16,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainNavComponent } from './main-nav/main-nav.component';
-import { RedVoznjeComponent } from './red-voznje/red-voznje.component';
+import {RedVoznjeComponent} from '../app/red-voznje/red-voznje.component'
+import { RedVoznjeHttpService } from './services/redvoznje.service';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -53,7 +54,7 @@ const routes: Routes = [
     MatListModule
   ],
 
-  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService],
+  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService,RedVoznjeHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
