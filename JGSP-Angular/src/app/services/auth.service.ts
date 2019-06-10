@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient,HttpHeaders,HttpResponse} from '@angular/common/http'
 import { RegUser } from 'src/app/osoba';
 import { Observable } from 'rxjs/internal/Observable';
+import {ImageSnippet} from 'src/app/registracija/registracija.component'
+import { fromEventPattern } from 'rxjs';
+
+
 
 @Injectable()
 export class AuthHttpService{
@@ -25,8 +29,11 @@ export class AuthHttpService{
         });
     }
 
-    reg(data: RegUser){
+    reg(data: RegUser): Observable<Response> {
      
-         this.http.post<any>(this.base_url + "/api/Account/Register", data).subscribe();
+        const formData = new FormData();
+
+        formData.append('image', Image);
+        return this.http.post<any>(this.base_url + "/api/Account/Register",formData,data );
     }
 }

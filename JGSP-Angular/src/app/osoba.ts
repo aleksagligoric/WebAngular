@@ -17,4 +17,5 @@ export class RegUser{
     confirmPassword: string
     email: string
     date: string
+    File:FormData
 }

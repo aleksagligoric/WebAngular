@@ -6,5 +6,12 @@ Sifra:<input type="password" formControlName="password" required> <br>
 Sifra potvrda:<input type="password" formControlName="confirmPassword" required> <br>
 E-mail:<input type="email" formControlName="email" required> <br>
 Datum rodjenja:<input type="date" formControlName="date" required> <br>
+<label class="image-upload-container btn btn-bwm">
+    <span>Select Image</span>
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           (change)="processFile(imageInput)">
+  </label>
 <button type="submit">Submit</button>
 </form>

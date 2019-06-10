@@ -6,6 +6,11 @@ import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+
+export class ImageSnippet {
+  constructor(public src: string, public file: File) {}
+}
+
 @Component({
   selector: 'app-registracija',
   templateUrl: './registracija.component.html',
@@ -20,7 +25,8 @@ export class RegistracijaComponent implements OnInit {
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
     email: ['', Validators.required],
-    date: ['', Validators.required]
+    date: ['', Validators.required],
+    ImageUrl: ['']
   });
 
   constructor(private http: AuthHttpService, private fb: FormBuilder, private router: Router) { }
@@ -28,12 +34,47 @@ export class RegistracijaComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(){
+  /*onSubmit(){
     let regModel: RegUser = this.registacijaForm.value;
     this.http.reg(regModel);
     
     this.router.navigate(["/login"])
     //form.reset();
+  }*/
+
+  selectedFile: ImageSnippet;
+
+  /*preview(files) {
+    if (files.length === 0)
+      return;
+ 
+    var mimeType = files[0].type;
+    if (mimeType.match(/image\/) == null) {
+      this.msg = "Only images are supported.";
+      return;
+    }*/
+ 
+    processFile(imageInput: any) {
+      const file: File = imageInput.files[0];
+      const reader = new FileReader();
+      let regModel: RegUser = this.registacijaForm.value;
+    
+
+      reader.addEventListener('load', (event: any) => {
+        
+        this.selectedFile = new ImageSnippet(event.target.result, file);
+        const formData = new FormData();
+
+        formData.append('image', this.selectedFile.file);
+        regModel.File=formData;
+        this.http.reg(regModel).subscribe(
+          (res) => {
+            console.log("ok");
+          },
+          (err) => {
+             console.log(err)
+          })
+      });
   }
 
 }
