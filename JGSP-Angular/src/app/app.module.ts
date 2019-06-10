@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import {RedVoznjeComponent} from '../app/red-voznje/red-voznje.component'
 import { RedVoznjeHttpService } from './services/redvoznje.service';
+import { AdminRedVoznjeControlComponent } from './admin-red-voznje-control/admin-red-voznje-control.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "registracija", component: RegistracijaComponent},
   {path: "redvoznje",component:RedVoznjeComponent},
+  {path:"adminredvoznjecontrol",component:AdminRedVoznjeControlComponent},
   {path: "**", redirectTo: "home"}
 ]
 
@@ -37,6 +39,7 @@ const routes: Routes = [
     RegistracijaComponent,
     MainNavComponent,
     RedVoznjeComponent,
+    AdminRedVoznjeControlComponent,
  
   ],
   imports: [

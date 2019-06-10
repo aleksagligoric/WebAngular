@@ -29,11 +29,8 @@ export class AuthHttpService{
         });
     }
 
-    reg(data: RegUser): Observable<Response> {
-     
-        const formData = new FormData();
-
-        formData.append('image', Image);
-        return this.http.post<any>(this.base_url + "/api/Account/Register",formData,data );
+    reg(data: RegUser): Observable<Response> { 
+       
+        return this.http.post<any>(this.base_url + "/api/Account/Register",data );
     }
 }
