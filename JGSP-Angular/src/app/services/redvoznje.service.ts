@@ -39,9 +39,26 @@ export class RedVoznjeHttpService{
         });
     }
 
+    getAllCena() : Observable<any>{
+        return Observable.create((observer) => {    
+            this.http.get<any>(this.base_url + "/api/RedVoznje/cenovnikInfo").subscribe(data =>{
+                observer.next(data);
+                observer.complete();     
+            })             
+        });
+    }
+
     getSelected(timetableTypeId: number, dayTypeId: number, lineId: number) : Observable<any>{
         return Observable.create((observer) => {    
             this.http.get<any>(this.base_url + "/api/RedVoznje/IspisReda"+ `/${timetableTypeId}` + `/${dayTypeId}`+ `/${lineId}`).subscribe(data =>{
+                observer.next(data);
+                observer.complete();     
+            })             
+        });
+    }
+    getSelectedCena(TicketTypeId: number, UserTypeId: number) : Observable<any>{
+        return Observable.create((observer) => {    
+            this.http.get<any>(this.base_url + "/api/RedVoznje/IspisCena"+ `/${TicketTypeId}` + `/${UserTypeId}`).subscribe(data =>{
                 observer.next(data);
                 observer.complete();     
             })             

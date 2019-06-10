@@ -36,7 +36,6 @@ nav.sidebar, .main{
     position: absolute;
     width: calc(100% - 40px); /*keeps 100% minus nav size*/
     margin-left: 40px;
-    float: right;
   }
 
   /*lets nav bar to be showed on mouseover*/

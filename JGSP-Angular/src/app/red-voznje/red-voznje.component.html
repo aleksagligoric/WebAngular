@@ -82,10 +82,35 @@
       </tr>
     
       </tbody>
+      <tr>
+          <td width="210px">
+              <span class="lightblue-box-label"> Cena Karte </span>
+          </td>
+          <td align="left">
+             
+            <select [(ngModel)]="selectedTicketType" name="selectedTicketType">
+              <option *ngFor="let TicketType of cenovnikInfo.ticketTypes" [ngValue]="TicketType">
+                {{TicketType.Name}}
+              </option>
+            </select>
+
+            <select [(ngModel)]="selectedUserType" name="selectedUserType">
+                <option *ngFor="let UserType of cenovnikInfo.userTypes" [ngValue]="UserType">
+                  {{UserType.Name}}
+                </option>
+              </select>
+              <div align="right">
+                  <button (click)="ispisCena()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Prikazi</button>
+              </div>
+              <input type="text" name="cena" value="{{pricelist.Cena}}"/>
+          </td>
+      </tr>
     </table>
   
     Polasci sa stanice:<br>
     {{timetable.Times}}
+
+ 
   
   </form>
   

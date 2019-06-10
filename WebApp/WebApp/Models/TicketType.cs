@@ -12,5 +12,7 @@ namespace WebApp.Models
         [Required]
         public string Name { get; set; }
 
+       // public List<Pricelist> Pricelists { get; set; }
+
     }
 }

@@ -1,5 +1,5 @@
 import { TimetableType } from './timetableType';
-import { DayType } from "./dayType";
+import { DayType } from './dayType';
 import { Line } from './line';
 
 export class RedVoznjeInfo{

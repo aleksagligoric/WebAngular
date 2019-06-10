@@ -5,6 +5,10 @@ import { Line } from '../models/line';
 import { DayType } from '../models/dayType';
 import { RedVoznjeInfo } from '../models/redVoznjeInfo';
 import { RedVoznjeHttpService } from "../services/redvoznje.service";
+import { cenovnikInfo } from '../models/cenovnikInfo';
+import { UserType } from '../models/userType';
+import { TicketType } from '../models/ticketType';
+import { Pricelist } from '../models/pricelist';
 
 @Component({
   selector: 'app-red-voznje',
@@ -14,17 +18,27 @@ import { RedVoznjeHttpService } from "../services/redvoznje.service";
 export class RedVoznjeComponent implements OnInit {
 
   redVoznjeInfo:RedVoznjeInfo = new RedVoznjeInfo();
+  cenovnikInfo:cenovnikInfo=new cenovnikInfo();
+  selectedUserType:UserType=new UserType();
+  selectedTicketType:TicketType=new UserType();
   selectedTimetableType: TimetableType = new TimetableType();
   selectedDayType: DayType = new DayType();
   selectedLine: Line = new Line();
   filteredLines: Line[] = [];
   timetable: Timetable = new Timetable();
+  pricelist:Pricelist=new Pricelist();
 
   constructor(private http: RedVoznjeHttpService) { }
 
   ngOnInit() {
     this.http.getAll().subscribe((redVoznjeInfo) => {
       this.redVoznjeInfo = redVoznjeInfo;
+      err => console.log(err);
+    });
+
+    this.http.getAllCena().subscribe((cenovnikInfo) => {
+      this.cenovnikInfo = cenovnikInfo;
+      console.log(this.cenovnikInfo);
       err => console.log(err);
     });
   }
@@ -46,4 +60,11 @@ export class RedVoznjeComponent implements OnInit {
     });
   }
 
+  ispisCena(){
+    this.http.getSelectedCena(this.selectedTicketType.Id, this.selectedUserType.Id).subscribe((data)=>{
+      this.pricelist.Cena = data;
+      console.log(this.pricelist.Cena);
+      err => console.log(err);
+    });
+  }
 }

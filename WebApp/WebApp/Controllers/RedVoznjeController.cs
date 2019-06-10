@@ -11,7 +11,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
-	[Authorize]
+//	[Authorize]
 	[RoutePrefix("api/RedVoznje")]
 	public class RedVoznjeController : ApiController
 	{
@@ -27,26 +27,7 @@ namespace WebApp.Controllers
 			this.db = db;
 		}
 
-		/*public RedVoznjeController(ApplicationUserManager userManager,
-			ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
-		{
-			UserManager = userManager;
-			AccessTokenFormat = accessTokenFormat;
-		}
-
-		public ApplicationUserManager UserManager
-		{
-			get
-			{
-				return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-			}
-			private set
-			{
-				_userManager = value;
-			}
-		}
-
-		public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }*/
+		
 
 		// GET: api/RedVoznje/IspisReda/{timetableTypeId}/{dayTypeId}/{lineId}
 		//[ResponseType(typeof(string))]
@@ -60,8 +41,18 @@ namespace WebApp.Controllers
 			return Ok(t.Times);
 		}
 
-		// GET: api/RedVoznje/RedVoznjiInfo
-		[ResponseType(typeof(RedVoznjeInfoBindingModel))]
+        [Route("IspisCena/{ticketTypeId}/{userTypeId}")]
+        [HttpGet]
+        public IHttpActionResult GetPrices(int ticketTypeId, int userTypeId) //vraca vremena polaska autobusa iz reda voznji
+        {
+            Pricelist t = new Pricelist();
+            t = db.RepositoryPricelists.Find(x => x.TicketTypeId == ticketTypeId && x.UserTypeId == userTypeId ).FirstOrDefault();
+
+            return Ok(t.Cena);
+        } 
+
+        // GET: api/RedVoznje/RedVoznjiInfo
+        [ResponseType(typeof(RedVoznjeInfoBindingModel))]
 		[Route("RedVoznjiInfo")]
 		public IHttpActionResult GetScheduleInfo()
 		{
@@ -73,7 +64,20 @@ namespace WebApp.Controllers
 			return Ok(s);
 		}
 
-		protected override void Dispose(bool disposing)
+        // GET: api/RedVoznje/RedVoznjiInfo
+        [ResponseType(typeof(CenovnikInfo))]
+        [Route("cenovnikInfo")]
+        public IHttpActionResult GetCenaInfo()
+        {
+            List<TicketType> TicketcTypes = db.RepositoryTicketTypes.GetAll().ToList();
+            List<UserType> UserTypes = db.RepositoryUserTypes.GetAll().ToList();
+            CenovnikInfo s = new CenovnikInfo{ userTypes=UserTypes, ticketTypes= TicketcTypes,};
+
+            return Ok(s);
+        }
+
+
+        protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{

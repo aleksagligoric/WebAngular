@@ -13,5 +13,7 @@ namespace WebApp.Models
         public string Name { get; set; }
 
         public List<ApplicationUser> Users { get; set; }
+
+        //public List<Pricelist> Pricelists { get; set; }
     }
 }

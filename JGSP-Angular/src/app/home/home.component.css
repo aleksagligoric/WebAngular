@@ -1,0 +1,9 @@
+.navbar{
+    
+    float:left; /* add this */
+}
+
+.redvoznje {
+    float: left; /* add this */
+    width: 80%;
+}
