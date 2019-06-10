@@ -44,5 +44,12 @@ export class AdminRedVoznjeControlComponent implements OnInit {
       err => console.log(err);
     });
   }
+  ChangeTime(){
+    this.http.PutTime(this.selectedTimetableType.Id, this.selectedDayType.Id,this.selectedLine.Id).subscribe((data)=>{
+      this.timetable.Times = data;
+      console.log(this.timetable);
+      err => console.log(err);
+    });
+  }
 
 }

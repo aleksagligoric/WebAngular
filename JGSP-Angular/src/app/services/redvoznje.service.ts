@@ -56,6 +56,14 @@ export class RedVoznjeHttpService{
             })             
         });
     }
+    PutTime(timetableTypeId: number, dayTypeId: number, lineId: number) : Observable<any>{
+        return Observable.create((observer) => {    
+            this.http.get<any>(this.base_url + "/api/RedVoznje/PromenaVremena"+ `/${timetableTypeId}` + `/${dayTypeId}`+ `/${lineId}`).subscribe(data =>{
+                observer.next(data);
+                observer.complete();     
+            })             
+        });
+    }
     getSelectedCena(TicketTypeId: number, UserTypeId: number) : Observable<any>{
         return Observable.create((observer) => {    
             this.http.get<any>(this.base_url + "/api/RedVoznje/IspisCena"+ `/${TicketTypeId}` + `/${UserTypeId}`).subscribe(data =>{
@@ -63,6 +71,7 @@ export class RedVoznjeHttpService{
                 observer.complete();     
             })             
         });
+    
     }
 
 }
