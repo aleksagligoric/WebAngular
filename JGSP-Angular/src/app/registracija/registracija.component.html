@@ -1,4 +1,67 @@
-<form [formGroup]="registacijaForm" (ngSubmit)="onSubmit()">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <i class="fas fa-bus"></i>
+                        <h3>JGSP</h3>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <h3 class="register-heading" >Registracija</h3>
+                                <form [formGroup]="registacijaForm" (ngSubmit)="onSubmit()">
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                       
+                                        <div class="form-group">
+                                            <input type="text" formControlName="name"  placeholder="Ime" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" formControlName="surname"  placeholder="Prezime" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" formControlName="username"  placeholder="Korisnicko Ime" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" formControlName="password"  placeholder="Lozinka" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" formControlName="confirmPassword"  placeholder="Ponovi Lozinku" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!-- <input type="adrress" formControlName="adrress" required> -->
+                                        </div>
+                                       <div class="form-group"> 
+                                           <input type="email" formControlName="email"  placeholder="E-mail:" required>
+                                        </div>
+                                        <div class="form-group"> 
+                                            <input type="date"  formControlName="date"  placeholder="Datum Rodjenja:" required>
+                                         </div>
+                                         <label class="image-upload-container btn btn-bwm">
+                                            <input #imageInput
+                                                   
+                                                   type="file"
+                                                   accept="image/*"
+                                                   (change)="processFile(imageInput)">
+                                          </label>
+                                    </div>
+                                </div>
+                                <button  type="submit" style="float: right;">Registracija</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+<!-- <form [formGroup]="registacijaForm" (ngSubmit)="onSubmit()">
 Ime:<input type="text" formControlName="name" required> <br>
 Prezime:<input type="text" formControlName="surname" required><br>
 Korisnicko ime:<input type="text" formControlName="username" required> <br>  
@@ -14,4 +77,4 @@ Datum rodjenja:<input type="date" formControlName="date" required> <br>
            (change)="processFile(imageInput)">
   </label>
 <button type="submit">Submit</button>
-</form>
+</form> -->

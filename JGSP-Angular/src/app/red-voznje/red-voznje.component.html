@@ -1,6 +1,6 @@
 <form id="rvform" name="rvform" action="redvoznje.php" method="get">
                        
-    <table class="cenovnik-form" width="100%">
+    <table class="cenovnik-form" style="float:center" width="100%">
     <tbody><tr>
         <td width="210px">
             <span class="lightblue-box-label"> Red voznje vazi od </span>
@@ -76,7 +76,7 @@
         <td>
         
         <div align="right">
-          <button (click)="ispisPolaska()" [disabled]="selectedTimetableType.Id==undefined || selectedDayType.Id==undefined || selectedLine.Id==undefined">Prikazi</button>
+          <button class="btn float-right login_btn" (click)="ispisPolaska()" [disabled]="selectedTimetableType.Id==undefined || selectedDayType.Id==undefined || selectedLine.Id==undefined">Prikazi</button>
         </div>
         </td>
       </tr>
@@ -100,17 +100,24 @@
             </select>
 
             <select [(ngModel)]="selectedUserType" name="selectedUserType">
-                <option *ngFor="let UserType of cenovnikInfo.userTypes" [ngValue]="UserType">
+                <option *ngFor="let UserType of cenovnikInfo.userTypes"  [ngValue]="UserType">
                   {{UserType.Name}}
                 </option>
               </select>
               <div align="right">
-                  <button (click)="ispisCena()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Prikazi</button>
+                  <button class="btn float-right login_btn" (click)="ispisCena()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Prikazi</button>
               </div>
               <input type="text" name="cena" value="{{pricelist.Cena}} din"/>
           </td>
-      </tr>
-      
+          </tr>
+          <tr>    
+              <td></td>
+              <td>
+              <div align="right">
+                <button class="btn float-right login_btn" (click)="kupiKartu()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Kupi</button>
+              </div>
+              </td>
+            </tr>
     </table>
  
   

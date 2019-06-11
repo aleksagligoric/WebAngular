@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Timetable } from '../models/timetable';
+import { Pricelist } from '../models/pricelist';
 
 @Injectable()
 export class RedVoznjeHttpService{
+
     base_url = "http://localhost:52295"
     constructor(private http: HttpClient){ }
 
@@ -85,6 +87,18 @@ export class RedVoznjeHttpService{
                 observer.complete();     
             })             
         });
+    
+    
+    }
+
+    postTicket(postTicket:Pricelist) : Observable<any>{
+        return Observable.create((observer) => {    
+            this.http.post<any>(this.base_url + "/api/RedVoznje/BuyTicket",postTicket).subscribe(data =>{
+                // observer.next(data);
+                observer.complete();     
+            })             
+        });
+    
     
     }
 

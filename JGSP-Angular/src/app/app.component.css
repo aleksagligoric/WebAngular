@@ -1,3 +1,10 @@
 body{
     margin:0;
 }
+*{
+    font-family: 'Numans', sans-serif;
+    background:-webkit-linear-gradient(left, #3931af, #00c6ff);
+}
+
+
+

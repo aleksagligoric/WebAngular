@@ -9,6 +9,7 @@ import { cenovnikInfo } from '../models/cenovnikInfo';
 import { UserType } from '../models/userType';
 import { TicketType } from '../models/ticketType';
 import { Pricelist } from '../models/pricelist';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-red-voznje',
@@ -60,11 +61,20 @@ export class RedVoznjeComponent implements OnInit {
     });
   }
 
+  kupiKartu(){
+    this.http.postTicket(this.pricelist).subscribe((data)=>{
+      err => console.log(err);
+    });
+  }
+
   ispisCena(){
     this.http.getSelectedCena(this.selectedTicketType.Id, this.selectedUserType.Id).subscribe((data)=>{
+      this.pricelist.TicketType = this.selectedTicketType.Id;
+      this.pricelist.UserType=this.selectedUserType.Id;
       this.pricelist.Cena = data;
       console.log(this.pricelist.Cena);
       err => console.log(err);
     });
+    
   }
 }

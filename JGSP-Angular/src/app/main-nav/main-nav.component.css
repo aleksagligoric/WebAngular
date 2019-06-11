@@ -1,6 +1,3 @@
-body,html{
-  height: 100%;
-}
 
 /* remove outer padding */
 .main .row{
@@ -12,6 +9,7 @@ body,html{
 
 nav.sidebar.navbar {
   border-radius: 0px;
+ 
 }
 
 nav.sidebar, .main{
@@ -19,6 +17,7 @@ nav.sidebar, .main{
     -moz-transition: margin 200ms ease-out;
     -o-transition: margin 200ms ease-out;
     transition: margin 200ms ease-out;
+   
 }
 
 /* Add gap to nav and right windows.*/
@@ -46,12 +45,14 @@ nav.sidebar, .main{
   /*Center Brand*/
   nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
     margin-left: 0px;
+  
   }
   /*Center Brand*/
   nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
     text-align: center;
     width: 100%;
     margin-left: 0px;
+    
   }
 
   /*Center Icons*/
@@ -75,7 +76,7 @@ nav.sidebar, .main{
     float: none;
     width: auto;
     margin-top: 0;
-    background-color: transparent;
+    background-color: navy;
     border: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -95,9 +96,11 @@ nav.sidebar, .main{
   nav.sidebar{
     width: 200px;
     height: 100%;
+    position: fixed;
     margin-left: -160px;
     float: left;
     z-index: 8000;
+    background: -webkit-linear-gradient(left, #cfcde9, #00c6ff);
     margin-bottom: 0px;
   }
 

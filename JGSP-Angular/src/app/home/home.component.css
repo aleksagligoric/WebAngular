@@ -1,9 +1,16 @@
+html,body{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background-size:cover;
+    background-repeat: no-repeat;
+    font-family: 'Numans', sans-serif;
+    height: 100%;
+}
 .navbar{
     
     float:left; /* add this */
 }
 
 .redvoznje {
-    float: left; /* add this */
-    width: 80%;
+   margin-left: 30%; /* add this */
+    width: 50%;
 }
