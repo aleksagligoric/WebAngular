@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Timetable } from '../models/timetable';
 
 @Injectable()
 export class RedVoznjeHttpService{
@@ -56,9 +57,22 @@ export class RedVoznjeHttpService{
             })             
         });
     }
-    PutTime(timetableTypeId: number, dayTypeId: number, lineId: number) : Observable<any>{
+    PutTime(timetableTypeId: number, dayTypeId: number, lineId: number, times: string) : Observable<any>{
+        let data: Timetable = new Timetable();
+        let httpOptions = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        data.Id = 5;
+        data.DayTypeId = dayTypeId;
+        data.LineId = lineId;
+        data.TimetableTypeId = timetableTypeId;
+        data.Times = times;
+
+
         return Observable.create((observer) => {    
-            this.http.get<any>(this.base_url + "/api/RedVoznje/PromenaVremena"+ `/${timetableTypeId}` + `/${dayTypeId}`+ `/${lineId}`).subscribe(data =>{
+            this.http.put<any>(this.base_url + "/api/RedVoznje/PromenaVremena", data, httpOptions).subscribe(data =>{
                 observer.next(data);
                 observer.complete();     
             })             

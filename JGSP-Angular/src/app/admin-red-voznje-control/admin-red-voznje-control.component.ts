@@ -19,6 +19,7 @@ export class AdminRedVoznjeControlComponent implements OnInit {
   selectedLine: Line = new Line();
   timetable: Timetable = new Timetable();
   filteredLines: Line[] = [];
+  times:  string;
   constructor(private http: RedVoznjeHttpService) { }
 
   ngOnInit() {
@@ -45,7 +46,7 @@ export class AdminRedVoznjeControlComponent implements OnInit {
     });
   }
   ChangeTime(){
-    this.http.PutTime(this.selectedTimetableType.Id, this.selectedDayType.Id,this.selectedLine.Id).subscribe((data)=>{
+    this.http.PutTime(this.selectedTimetableType.Id, this.selectedDayType.Id,this.selectedLine.Id, this.times).subscribe((data)=>{
       this.timetable.Times = data;
       console.log(this.timetable);
       err => console.log(err);

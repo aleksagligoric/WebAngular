@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
 using WebApp.Models.BindingModels;
 using WebApp.Persistence.UnitOfWork;
+using System.Linq;
 
 namespace WebApp.Controllers
 {
@@ -77,6 +79,36 @@ namespace WebApp.Controllers
         }
 
 
+        [HttpPut]
+        [AllowAnonymous]
+        [Route("PromenaVremena")]
+        public async Task<IHttpActionResult> PromenaVremena([FromBody]Timetable model)
+        {
+            var dayId = model.DayTypeId;
+            var lineId = model.LineId;
+            var timeTableTypeId = model.TimetableTypeId;
+            var time = model.Times;
+
+            var list = db.RepositoryTimetables.Find(x => x.LineId == lineId && x.TimetableTypeId == timeTableTypeId && x.DayTypeId == dayId);
+            list = list.ToList();
+
+            var items = db.RepositoryTimetables.GetAll();
+           
+            foreach(var item in items)
+            {
+                if (item.LineId == lineId && item.TimetableTypeId == timeTableTypeId && item.DayTypeId == dayId)
+                {
+                    item.Times = time;
+                    db.RepositoryTimetables.Update(item);
+                    break;
+                }
+            }
+
+
+
+
+            return InternalServerError();
+        }
         protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -89,7 +121,7 @@ namespace WebApp.Controllers
 		private bool TimetableExist(int id)
 		{
 			return db.RepositoryTimetables.GetAll().Count(e => e.Id == id) > 0;
-		}
+		} 
 
 	}
 }

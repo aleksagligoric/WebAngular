@@ -1,6 +1,7 @@
 export class Timetable{
     Id: number
-    TimtableTypeId: number
+    TimetableTypeId: number
     DayTypeId: number
     Times: string
-}    
+    LineId: number
+}
