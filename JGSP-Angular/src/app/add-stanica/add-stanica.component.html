@@ -1,0 +1,54 @@
+<form id="rvform" name="rvform" action="redvoznje.php" method="get">
+                       
+  <table form [formGroup]="stanicaForm" (ngSubmit)="onSubmit()" width="100%">
+  <tbody>
+  
+ 
+  <tr>
+      <td width="210px">
+          <span class="lightblue-box-label"> Ime: </span>
+      </td>
+      <td align="left">
+        <input type="text" formControlName="Name"/>         
+      </td>
+  </tr>
+  
+  
+  <tr>
+      <td align="left">
+          <span class="lightblue-box-label">
+           Adresa:
+          </span>
+      </td>
+      <td align="left">
+        <input type="text" formControlName="Adrress"/>      
+      </td>
+  </tr>
+
+  <tr>
+    <td align="left">
+        <span class="lightblue-box-label">
+          X kordinata:
+        </span>
+    </td>
+    <td align="left">
+      <input type="text" formControlName="X"/>      
+    </td>
+  </tr>
+   
+  <tr>
+    <td align="left">
+        <span class="lightblue-box-label">
+         Y kordinata:
+        </span>
+    </td>
+    <td align="left">
+      <input type="text" formControlName="Y"/>      
+    </td>
+  </tr>  
+  
+    
+  </table>
+
+
+</form>

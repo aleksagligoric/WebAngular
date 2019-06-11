@@ -19,6 +19,8 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import {RedVoznjeComponent} from '../app/red-voznje/red-voznje.component'
 import { RedVoznjeHttpService } from './services/redvoznje.service';
 import { AdminRedVoznjeControlComponent } from './admin-red-voznje-control/admin-red-voznje-control.component';
+import { AddStanicaComponent } from './add-stanica/add-stanica.component';
+import { StationServiceService } from './services/station-service.service';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -27,6 +29,7 @@ const routes: Routes = [
   {path: "registracija", component: RegistracijaComponent},
   {path: "redvoznje",component:RedVoznjeComponent},
   {path:"adminredvoznjecontrol",component:AdminRedVoznjeControlComponent},
+  {path:"addstanica",component:AddStanicaComponent},
   {path: "**", redirectTo: "home"}
 ]
 
@@ -40,6 +43,7 @@ const routes: Routes = [
     MainNavComponent,
     RedVoznjeComponent,
     AdminRedVoznjeControlComponent,
+    AddStanicaComponent,
  
   ],
   imports: [
@@ -57,7 +61,7 @@ const routes: Routes = [
     MatListModule
   ],
 
-  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService,RedVoznjeHttpService],
+  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService,RedVoznjeHttpService,StationServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -34,25 +34,11 @@ export class RegistracijaComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*onSubmit(){
-    let regModel: RegUser = this.registacijaForm.value;
-    this.http.reg(regModel);
-    
-    this.router.navigate(["/login"])
-    //form.reset();
-  }*/
+
 
   selectedFile: ImageSnippet;
 
-  /*preview(files) {
-    if (files.length === 0)
-      return;
- 
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/) == null) {
-      this.msg = "Only images are supported.";
-      return;
-    }*/
+
  
     processFile(imageInput: any) {
       const file: File = imageInput.files[0];
