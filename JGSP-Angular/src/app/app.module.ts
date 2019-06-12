@@ -22,6 +22,7 @@ import { AdminRedVoznjeControlComponent } from './admin-red-voznje-control/admin
 import { AddStanicaComponent } from './add-stanica/add-stanica.component';
 import { StationServiceService } from './services/station-service.service';
 import { AdminCenovnikComponent } from './admin-cenovnik/admin-cenovnik.component';
+import { AdminAddLineComponent } from './admin-add-line/admin-add-line.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path:"adminredvoznjecontrol",component:AdminRedVoznjeControlComponent},
   {path:"addstanica",component:AddStanicaComponent},
   {path: 'admincenovnik', component:AdminCenovnikComponent},
+  {path:'adminaddline',component:AdminAddLineComponent},
   {path: "**", redirectTo: "home"}
 ]
 
@@ -47,6 +49,7 @@ const routes: Routes = [
     AdminRedVoznjeControlComponent,
     AddStanicaComponent,
     AdminCenovnikComponent,
+    AdminAddLineComponent,
  
   ],
   imports: [
