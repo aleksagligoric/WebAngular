@@ -31,6 +31,7 @@ const routes: Routes = [
   {path: "redvoznje",component:RedVoznjeComponent},
   {path:"adminredvoznjecontrol",component:AdminRedVoznjeControlComponent},
   {path:"addstanica",component:AddStanicaComponent},
+  {path: 'admincenovnik', component:AdminCenovnikComponent},
   {path: "**", redirectTo: "home"}
 ]
 

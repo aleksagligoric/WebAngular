@@ -1,5 +1,5 @@
-
-   <table>
+<form id="rvform" name="rvform" action="redvoznje.php" method="get">
+  <table class="cenovnik-form" style="float:center" width="100%">
      <tr>
         <td width="210px">
             <span class="lightblue-box-label"> Cena Karte </span>
@@ -20,7 +20,7 @@
             <div align="right">
                 <button class="btn float-right login_btn" (click)="ispisCena()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Trenutna cena</button>
             </div>
-            <input type="text"  name="cena" value="{{pricelist.Cena}} din"/>
+            <input id='pricelist.Price' [(ngModel)] = 'novaCena' type="text" name="cena" value="{{pricelist.Price}}" />
         </td>
         </tr>
         <tr>    
@@ -32,3 +32,4 @@
             </td>
           </tr>
       </table>  
+      </form>

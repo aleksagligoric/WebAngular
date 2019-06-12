@@ -10,7 +10,6 @@ import { UserType } from '../models/userType';
 import { TicketType } from '../models/ticketType';
 import { Pricelist } from '../models/pricelist';
 import { TouchSequence } from 'selenium-webdriver';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-red-voznje',
@@ -32,7 +31,7 @@ export class RedVoznjeComponent implements OnInit {
   ticketPrice: String = new String();
   labelText = 'Cena karte: 55din';
 
-  constructor(private http: RedVoznjeHttpService, private spinner : NgxSpinnerService) { }
+  constructor(private http: RedVoznjeHttpService) { }
 
   ngOnInit() {
     this.http.getAll().subscribe((redVoznjeInfo) => {
@@ -69,18 +68,15 @@ export class RedVoznjeComponent implements OnInit {
       this.labelText = 'Id kupljene karte: ' + data;
       //alert(data);
     });
-
-
   }
 
   ispisCena(){
     this.http.getSelectedCena(this.selectedTicketType.Id, this.selectedUserType.Id).subscribe((data)=>{
       this.pricelist.TicketTypeId = this.selectedTicketType.Id;
       this.pricelist.UserTypeId=this.selectedUserType.Id;
-      this.pricelist.Cena = data;
-      console.log(this.pricelist.Cena);
+      this.pricelist.Price = data;
+      console.log(this.pricelist.Price);
       err => console.log(err);
     });
-
   }
 }

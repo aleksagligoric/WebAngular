@@ -24,10 +24,19 @@ export class AdminCenovnikService {
 
 }
 
+getTicketUserTypes() : Observable<any>{
+    return Observable.create((observer) => {
+        this.http.get<any>(this.base_url + "/api/Tickets/CenovnikInfo").subscribe(data =>{
+            observer.next(data);
+            observer.complete();
+        })
+    });
+}
+
 
 postTicket(postTicket: Pricelist): Observable<any>{
     return Observable.create( (observer) => {
-        this.http.post<string>(this.base_url + '/api/Tickets/BuyTicket', postTicket).subscribe(data => {
+        this.http.post<string>(this.base_url + '/api/Tickets/PromeniCenu', postTicket).subscribe(data => {
             observer.next(data);
             observer.complete();
         });

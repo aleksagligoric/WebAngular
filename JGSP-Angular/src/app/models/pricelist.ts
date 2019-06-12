@@ -7,5 +7,5 @@ export class Pricelist{
     To: string
     UserTypeId:number
     TicketTypeId:number
-    Cena:number
+    Price:number
 }
