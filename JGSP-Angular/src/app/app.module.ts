@@ -21,6 +21,7 @@ import { RedVoznjeHttpService } from './services/redvoznje.service';
 import { AdminRedVoznjeControlComponent } from './admin-red-voznje-control/admin-red-voznje-control.component';
 import { AddStanicaComponent } from './add-stanica/add-stanica.component';
 import { StationServiceService } from './services/station-service.service';
+import { AdminCenovnikComponent } from './admin-cenovnik/admin-cenovnik.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
     RedVoznjeComponent,
     AdminRedVoznjeControlComponent,
     AddStanicaComponent,
+    AdminCenovnikComponent,
  
   ],
   imports: [
