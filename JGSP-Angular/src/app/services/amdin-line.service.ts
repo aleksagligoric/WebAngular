@@ -13,6 +13,15 @@ export class AmdinLineService {
             observer.next(data);
             observer.complete();
         })
+    });   
+  }
+
+  addLine(stations:string,line:string) : Observable<any>{
+    return Observable.create((observer) => {
+        this.http.post<any>(this.base_url + "/api/Station/GetStations"+`/${stations}` + `/${line}`).subscribe(data =>{
+            observer.next(data);
+            observer.complete();
+        })
     });
 }
 }

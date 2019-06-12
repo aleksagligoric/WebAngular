@@ -1,13 +1,21 @@
 <form id="rvform" name="rvform" action="redvoznje.php" method="get">
   <table class="cenovnik-form" style="float:center" width="100%">
-
-  <td>
-    <input id='LineNumber' [(ngModel)] = 'LineNumber' type="text" name="LineNumber" value="{{LineNumber}}" />
-  </td>
-  <tr>
+ 
+    <tr>Sve stanice</tr>
     <td>
       <textarea rows='5'  type="text"   value="{{AllStation}}"></textarea>
     </td>
+    <tr>Upisite stanice za liniju (ime1,ime2,ime3...)</tr>
+  <tr>
+  <td>
+    <input  type="text" [(ngModel)] = 'LineStation'  value="{{LineStation}}">
+  </td>
   </tr>
+  <tr>Upisite ime za liniju</tr>
+  <tr>
+      <td>
+        <input  type="text" [(ngModel)] = 'LineName'  value="{{LineName}}">
+      </td>
+      </tr>
 </table>
 </form>

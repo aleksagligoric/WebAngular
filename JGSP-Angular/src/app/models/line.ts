@@ -1,4 +1,8 @@
+
+
 export class Line{
     Id: number
-    SerialNumber: number
+    Number: string
+    Stations:string
+
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AmdinLineService } from '../services/amdin-line.service';
+import { Line } from '../models/line';
 
 @Component({
   selector: 'app-admin-add-line',
@@ -9,6 +10,9 @@ import { AmdinLineService } from '../services/amdin-line.service';
 export class AdminAddLineComponent implements OnInit {
 
   AllStation:string;
+  LineStation:string;
+  LineName:string;
+  lajna:Line;
 
   constructor(private http: AmdinLineService) { }
 
@@ -18,6 +22,10 @@ export class AdminAddLineComponent implements OnInit {
       this.AllStation = data;
       err => console.log(err);
     });
-  }
 
+    this.http.addLine(this.lajna).subscribe((data) => {
+
+    });
+
+  }
 }
