@@ -69,8 +69,8 @@ export class RedVoznjeComponent implements OnInit {
 
   ispisCena(){
     this.http.getSelectedCena(this.selectedTicketType.Id, this.selectedUserType.Id).subscribe((data)=>{
-      this.pricelist.TicketType = this.selectedTicketType.Id;
-      this.pricelist.UserType=this.selectedUserType.Id;
+      this.pricelist.TicketTypeId = this.selectedTicketType.Id;
+      this.pricelist.UserTypeId=this.selectedUserType.Id;
       this.pricelist.Cena = data;
       console.log(this.pricelist.Cena);
       err => console.log(err);

@@ -5,7 +5,7 @@ export class Pricelist{
     Id: number
     From: string
     To: string
-    UserType:number
-    TicketType:number
+    UserTypeId:number
+    TicketTypeId:number
     Cena:number
 }

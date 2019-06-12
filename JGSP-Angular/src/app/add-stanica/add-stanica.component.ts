@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Station} from '../models/station'
 import { StationServiceService } from '../services/station-service.service';
+import { getNumberOfCurrencyDigits } from '@angular/common';
 
 @Component({
   selector: 'app-add-stanica',
@@ -11,9 +12,12 @@ import { StationServiceService } from '../services/station-service.service';
 })
 
 export class AddStanicaComponent implements OnInit {
-  stanicaForm = this.fb.group({
-    name: ['', Validators.required],
-  })
+    stanicaForm = this.fb.group({
+      Name: [''],
+      Address:  [''],
+      X:   [''],
+      Y:  [''],
+  });
 
 
   constructor(private http: StationServiceService,private fb: FormBuilder, private router: Router) { }
@@ -23,8 +27,17 @@ export class AddStanicaComponent implements OnInit {
   
  onSubmit(){
     let regModel: Station = this.stanicaForm.value;
-    this.http.AddStation(regModel);
-    
+
+    this.http.AddStation(regModel).subscribe(
+      (res) => {
+        console.log("ok");
+      },
+      (err) => {
+         console.log(err)
+      })
+
+
+
     this.router.navigate(["/login"])
     //stanicaForm.reset();
   }

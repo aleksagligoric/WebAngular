@@ -78,6 +78,22 @@ namespace WebApp.Controllers
             return Ok(s);
         }
 
+        [HttpPost]
+        [Route("BuyTicket")]
+        public IHttpActionResult BuyTicket(Pricelist data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            int a = 3;
+
+
+
+
+            return Ok();
+        }
+
 
         [HttpPut]
         [AllowAnonymous]
