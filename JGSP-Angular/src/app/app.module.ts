@@ -23,6 +23,7 @@ import { AddStanicaComponent } from './add-stanica/add-stanica.component';
 import { StationServiceService } from './services/station-service.service';
 import { AdminCenovnikComponent } from './admin-cenovnik/admin-cenovnik.component';
 import { AdminAddLineComponent } from './admin-add-line/admin-add-line.component';
+import { AmdinLineService } from './services/amdin-line.service';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -67,7 +68,7 @@ const routes: Routes = [
     MatListModule
   ],
 
-  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService,RedVoznjeHttpService,StationServiceService],
+  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService, AmdinLineService, RedVoznjeHttpService,StationServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

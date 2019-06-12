@@ -38,7 +38,22 @@ namespace WebApp.Controllers
             this.db = db;
         }
 
+        [AllowAnonymous]
+        [Route("GetStations")]
+        public async Task<IHttpActionResult> GetStations()
+        {
+            var stations = db.RepositoryStations.GetAll();
 
+            string retVal = "";
+            foreach(var station in stations)
+            {
+                retVal += station.Name + "\n";
+            }
+
+            return Ok(retVal);
+        }
+        
+        [Route("")]
 
         [AllowAnonymous]
         [Route("AddStation")]
