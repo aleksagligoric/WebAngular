@@ -1,5 +1,5 @@
 <form id="rvform" name="rvform" action="redvoznje.php" method="get">
-                       
+
     <table class="cenovnik-form" style="float:center" width="100%">
     <tbody><tr>
         <td width="210px">
@@ -7,31 +7,31 @@
         </td>
         <td align="left">
              <select class="selectbox" id="vaziod" onchange="lista_linija();" name="vaziod">
-                                                    <option value="2019-05-25"> 
-                    25.05.2019 
+                                                    <option value="2019-05-25">
+                    25.05.2019
                 </option>
-                    
+
           </select>
         </td>
     </tr>
-    
-   
+
+
     <tr>
         <td width="210px">
             <span class="lightblue-box-label"> Red voznje </span>
         </td>
         <td align="left">
-           
+
           <select [(ngModel)]="selectedTimetableType" name="selectedTimetableType">
             <option *ngFor="let TimetableType of redVoznjeInfo.TimetableTypes" [ngValue]="TimetableType">
               {{TimetableType.Name}}
             </option>
           </select>
-           
+
         </td>
     </tr>
-    
-    
+
+
     <tr>
         <td align="left">
             <span class="lightblue-box-label">
@@ -39,42 +39,42 @@
             </span>
         </td>
         <td align="left">
-            
+
           <select [(ngModel)]="selectedDayType" name="selectedDayType" >
             <option *ngFor="let DayType of redVoznjeInfo.DayTypes" [ngValue]="DayType">
               {{DayType.Name}}
             </option>
           </select>
-            
+
         </td>
     </tr>
-    
-    
+
+
     <tr>
         <td align="left">
-        
+
           <span class="lightblue-box-label">
             Linija
               <br>
-                (Izaberite liniju) 
+                (Izaberite liniju)
              </span>
-        
+
         </td>
-        <td align="left" valign="top">    
-          <div id="lista_linija">		
+        <td align="left" valign="top">
+          <div id="lista_linija">
             <select [(ngModel)]="selectedLine" name="selectedLine" (change)="changeselectedLine()">
               <option *ngFor="let Line of redVoznjeInfo.Lines" [ngValue]="Line">
                 {{Line.SerialNumber}}
               </option>
             </select>
-          </div>                               
+          </div>
         </td>
      </tr>
-     <tr>    
-         
+     <tr>
+
         <td></td>
         <td>
-        
+
         <div align="right">
           <button class="btn float-right login_btn" (click)="ispisPolaska()" [disabled]="selectedTimetableType.Id==undefined || selectedDayType.Id==undefined || selectedLine.Id==undefined">Prikazi</button>
         </div>
@@ -89,11 +89,19 @@
       </tbody>
       <tr>
           <td width="210px">
-              <span class="lightblue-box-label"> Cena Karte </span>
+              <span class="lightblue-box-label"> Kupovina karte </span>
+          </td>
+          <td>
+              <div align="left">
+                <p align="left">{{labelText}}</p>
+              </div>
+              <div align="right">
+                <button align="right" class="btn float-right login_btn" (click)="kupiKartu()" >Kupi</button>
+              </div>
+
           </td>
           <td align="left">
-             
-            <select [(ngModel)]="selectedTicketType" name="selectedTicketType">
+            <!-- <select [(ngModel)]="selectedTicketType" name="selectedTicketType">
               <option *ngFor="let TicketType of cenovnikInfo.ticketTypes" [ngValue]="TicketType">
                 {{TicketType.Name}}
               </option>
@@ -103,23 +111,9 @@
                 <option *ngFor="let UserType of cenovnikInfo.userTypes"  [ngValue]="UserType">
                   {{UserType.Name}}
                 </option>
-              </select>
-              <div align="right">
-                  <button class="btn float-right login_btn" (click)="ispisCena()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Prikazi</button>
-              </div>
-              <input type="text" name="cena" value="{{pricelist.Cena}} din"/>
+              </select> -->
+              <!-- <input type="text" name="cena" value="{{pricelist.Cena}} din"/> -->
           </td>
           </tr>
-          <tr>    
-              <td></td>
-              <td>
-              <div align="right">
-                <button class="btn float-right login_btn" (click)="kupiKartu()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Kupi</button>
-              </div>
-              </td>
-            </tr>
     </table>
- 
-  
   </form>
-  

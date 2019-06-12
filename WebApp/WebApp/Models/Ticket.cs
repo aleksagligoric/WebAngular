@@ -9,10 +9,8 @@ namespace WebApp.Models
     public class Ticket
     {
         public int Id { get; set; }
-        [Required]
-        public double FinalPrice { get; set; }
-
-        public int UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public int Price { get; set; }
     }
 }

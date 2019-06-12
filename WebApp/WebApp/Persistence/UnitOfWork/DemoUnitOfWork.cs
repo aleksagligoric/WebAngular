@@ -48,7 +48,10 @@ namespace WebApp.Persistence.UnitOfWork
 		[Dependency]
 		public IRepositoryVehicle RepositoryVehicles { get; set; }
 
-		public int Complete()
+        [Dependency]
+        public IRepositoryTicket RepositoryTickets { get; set;}
+
+        public int Complete()
         {
             return _context.SaveChanges();
         }

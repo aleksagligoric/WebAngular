@@ -50,7 +50,7 @@ namespace WebApp.Controllers
             Pricelist t = new Pricelist();
             t = db.RepositoryPricelists.Find(x => x.TicketTypeId == ticketTypeId && x.UserTypeId == userTypeId ).FirstOrDefault();
 
-            return Ok(t.Cena);
+            return Ok(t.Price);
         } 
 
         // GET: api/RedVoznje/RedVoznjiInfo
@@ -86,12 +86,14 @@ namespace WebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            int a = 3;
+            Ticket t = new Ticket();
+            db.RepositoryTickets.Add(t);
+            db.Complete();
 
 
 
 
-            return Ok();
+            return Ok(t.Id.ToString());
         }
 
 

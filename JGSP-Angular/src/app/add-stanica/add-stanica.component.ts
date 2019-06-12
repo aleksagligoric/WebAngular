@@ -22,20 +22,19 @@ export class AddStanicaComponent implements OnInit {
 
   constructor(private http: StationServiceService,private fb: FormBuilder, private router: Router) { }
 
-  ngOnInit() {  
+  ngOnInit() {
   }
-  
+
  onSubmit(){
     let regModel: Station = this.stanicaForm.value;
 
     this.http.AddStation(regModel).subscribe(
       (res) => {
-        console.log("ok");
+        alert('Ok');
       },
       (err) => {
-         console.log(err)
+         alert('error');
       })
-
 
 
     this.router.navigate(["/login"])

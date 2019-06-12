@@ -20,6 +20,7 @@ namespace WebApp.Persistence.UnitOfWork
 		IRepositoryTimetableType RepositoryTimetableTypes { get; set; }
 		IRepositoryUserType RepositoryUserTypes { get; set; }
 		IRepositoryVehicle RepositoryVehicles { get; set; }
+		IRepositoryTicket RepositoryTickets { get; set; }
 
 		int Complete();
     }
