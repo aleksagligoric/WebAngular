@@ -1,0 +1,17 @@
+<form id="rvform" name="rvform" action="redvoznje.php" method="get">
+  <table class="cenovnik-form" style="float:center" width="100%">
+  <tr>
+  <td>
+    <input  type="text" [(ngModel)] = "TicketId"  value="{{TicketId}}" placeholder="Unesite id karte">
+  </td>
+  </tr>
+  <tr>Upisite ime za liniju</tr>
+  <tr>
+      <td>
+        <input  type="text" [(ngModel)] = 'IsValidate'  value="{{IsValidate}}">
+      </td>
+      </tr>
+</table>
+<input type="submit" (click)="Verify()">
+</form>
+

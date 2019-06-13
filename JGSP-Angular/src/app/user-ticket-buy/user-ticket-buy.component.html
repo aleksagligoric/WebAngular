@@ -1,0 +1,26 @@
+
+<form id="rvform" name="rvform" action="redvoznje.php" method="get">
+<table class="cenovnik-form" style="float:center" width="100%">
+  <select [(ngModel)]="selectedTicketType" name="selectedTicketType">
+    <option *ngFor="let TicketType of cenovnikInfo.ticketTypes" [ngValue]="TicketType">
+      {{TicketType.Name}}
+    </option>
+  </select>
+  <tr>
+  <td>  
+  <div align="right">
+      <button class="btn float-right login_btn" (click)="ispisCena()" [disabled]="selectedTicketType.Id==undefined">Trenutna cena</button>
+  </div>
+       <input id='pricelist.Price' [(ngModel)] = 'novaCena' type="text" name="cena" value="{{pricelist.Price}}" />
+  </td>
+  </tr>
+  <tr>    
+      <td></td>
+      <td>
+      <div align="right">
+        <button class="btn float-right login_btn" (click)="KupiKartu()" [disabled]="selectedUserType.Id==undefined || selectedTicketType.Id==undefined">Kupi</button>
+      </div>
+      </td>
+    </tr>
+  </table>
+  </form>

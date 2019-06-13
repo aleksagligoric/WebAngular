@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <!-- <input type="adrress" formControlName="adrress" required> -->
+                                            <input type="Address" formControlName="Address" placeholder="Adresa" required>
                                         </div>
                                        <div class="form-group"> 
                                            <input type="email" formControlName="email"  placeholder="E-mail:" required>
@@ -43,6 +43,13 @@
                                         <div class="form-group"> 
                                             <input type="date"  formControlName="date"  placeholder="Datum Rodjenja:" required>
                                          </div>
+                                         <div id="form-group">
+                                                <select  formControlName="type"  placeholder="Tip Korisnika">
+                                                  <option> Penzioner </option>
+                                                  <option> Djak</option>
+                                                  <option>Regularan</option>
+                                                </select>
+                                              </div>
                                          <label class="image-upload-container btn btn-bwm">
                                             <input #imageInput
                                                    
@@ -52,13 +59,12 @@
                                           </label>
                                     </div>
                                 </div>
-                                <button  type="submit" style="float: right;">Registracija</button>
+                                <button  type="submit" (click)="processFile" style="float: right;">Registracija</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
 <!-- <form [formGroup]="registacijaForm" (ngSubmit)="onSubmit()">

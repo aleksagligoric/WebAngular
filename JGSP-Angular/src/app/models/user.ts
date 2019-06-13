@@ -7,4 +7,5 @@ export class User{
     Surname: string;
     Address: string;
     Date: string;
+    type:string;
 }

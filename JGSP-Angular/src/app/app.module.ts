@@ -24,6 +24,8 @@ import { StationServiceService } from './services/station-service.service';
 import { AdminCenovnikComponent } from './admin-cenovnik/admin-cenovnik.component';
 import { AdminAddLineComponent } from './admin-add-line/admin-add-line.component';
 import { AmdinLineService } from './services/amdin-line.service';
+import { ControlorCardVerificationComponent } from './controlor-card-verification/controlor-card-verification.component';
+import { UserTicketBuyComponent } from './user-ticket-buy/user-ticket-buy.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -51,6 +53,8 @@ const routes: Routes = [
     AddStanicaComponent,
     AdminCenovnikComponent,
     AdminAddLineComponent,
+    ControlorCardVerificationComponent,
+    UserTicketBuyComponent,
  
   ],
   imports: [

@@ -26,6 +26,8 @@ export class RegistracijaComponent implements OnInit {
     confirmPassword: ['', Validators.required],
     email: ['', Validators.required],
     date: ['', Validators.required],
+    type:['',Validators.required],
+    Address:['',Validators.required],
     ImageUrl: ['']
   });
 

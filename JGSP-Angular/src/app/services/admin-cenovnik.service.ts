@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Pricelist } from '../models/pricelist';
+import { TicketType } from '../models/ticketType';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,6 @@ export class AdminCenovnikService {
             observer.complete();
         })
     });
-
 
 }
 
@@ -42,4 +42,14 @@ postTicket(postTicket: Pricelist): Observable<any>{
         });
     });
 }
+
+httpUserPostTicket(TicketTypestring:number): Observable<any>{
+    return Observable.create( (observer) => {
+        this.http.post<string>(this.base_url + '/api/Tickets/UserTicketBuy', TicketTypestring).subscribe(data => {
+            observer.next(data);
+            observer.complete();
+        });
+    });
+}
+
 }
