@@ -12,7 +12,7 @@ export class AdminAddLineComponent implements OnInit {
   AllStation:string;
   LineStation:string;
   LineName:string;
-  lajna:Line;
+  lajna: Line;
 
   constructor(private http: AmdinLineService) { }
 
@@ -22,6 +22,13 @@ export class AdminAddLineComponent implements OnInit {
       this.AllStation = data;
       err => console.log(err);
     });
+  }
+
+
+  addLine()
+  {
+    this.lajna.Stations = this.AllStation;
+    this.lajna.SerialNumber = +this.LineName;
 
     this.http.addLine(this.lajna).subscribe((data) => {
 

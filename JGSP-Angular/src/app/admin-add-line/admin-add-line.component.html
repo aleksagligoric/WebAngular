@@ -8,7 +8,7 @@
     <tr>Upisite stanice za liniju (ime1,ime2,ime3...)</tr>
   <tr>
   <td>
-    <input  type="text" [(ngModel)] = 'LineStation'  value="{{LineStation}}">
+    <input  type="text" [(ngModel)] = "AllStation"  value="{{LineStation}}">
   </td>
   </tr>
   <tr>Upisite ime za liniju</tr>
@@ -18,4 +18,5 @@
       </td>
       </tr>
 </table>
+<input type="submit" (click)="addLine()">
 </form>

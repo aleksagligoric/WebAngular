@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Line } from '../models/line';
 
 @Injectable()
 export class AmdinLineService {
@@ -16,9 +17,9 @@ export class AmdinLineService {
     });   
   }
 
-  addLine(stations:string,line:string) : Observable<any>{
+  addLine(lajna: Line) : Observable<any>{
     return Observable.create((observer) => {
-        this.http.post<any>(this.base_url + "/api/Station/GetStations"+`/${stations}` + `/${line}`).subscribe(data =>{
+        this.http.post<any>(this.base_url + "/api/Line/AddLine", lajna).subscribe(data =>{
             observer.next(data);
             observer.complete();
         })
