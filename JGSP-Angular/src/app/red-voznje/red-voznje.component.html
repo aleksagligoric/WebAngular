@@ -1,119 +1,81 @@
-<form id="rvform" name="rvform" action="redvoznje.php" method="get">
 
-    <table class="cenovnik-form" style="float:center" width="100%">
-    <tbody><tr>
-        <td width="210px">
-            <span class="lightblue-box-label"> Red voznje vazi od </span>
-        </td>
-        <td align="left">
-             <select class="selectbox" id="vaziod" onchange="lista_linija();" name="vaziod">
-                                                    <option value="2019-05-25">
-                    25.05.2019
-                </option>
+  <!-- <select [(ngModel)]="selectedLine" >
+    <option *ngFor="let lin of linijeZaView">
+      <a title="{{text}}">{{lin}}</a>
+    </option>
+  </select>
+  <select [(ngModel)]="dan" >
+      <option *ngFor="let d of dani">
+        {{d}} 
+      </option>
+    </select>
+<p>
+<button (click)="OnGetLinije()" >Prikazi linije</button>
+<button (click)="OnGetPolasci()" >Prikazi</button>
+ iz baze:<br>
+  {{linija.linije}}
+  Polasci sa stanice:<br>
+  {{ras.polasci}}
+</p>
 
-          </select>
-        </td>
-    </tr>
+<app-map [linija]="selectedLine"></app-map> -->
 
-
-    <tr>
-        <td width="210px">
-            <span class="lightblue-box-label"> Red voznje </span>
-        </td>
-        <td align="left">
-
-          <select [(ngModel)]="selectedTimetableType" name="selectedTimetableType">
-            <option *ngFor="let TimetableType of redVoznjeInfo.TimetableTypes" [ngValue]="TimetableType">
-              {{TimetableType.Name}}
-            </option>
-          </select>
-
-        </td>
-    </tr>
+<!-- <button (click)="JsonParsiranje()" >Json</button> -->
 
 
-    <tr>
-        <td align="left">
-            <span class="lightblue-box-label">
-              Dan
-            </span>
-        </td>
-        <td align="left">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-          <select [(ngModel)]="selectedDayType" name="selectedDayType" >
-            <option *ngFor="let DayType of redVoznjeInfo.DayTypes" [ngValue]="DayType">
-              {{DayType.Name}}
-            </option>
-          </select>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- Include the above in your HEAD tag -->
 
-        </td>
-    </tr>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+<div class="main">
+  <div class="container">
+  <div class="middle">
+        <div id="login">
+            
+              <p class="paragraf_text">Linija:<br>
+              <select id="ButtonsHomePage" [(ngModel)]="selectedLine" >
+                  <option *ngFor="let lin of linijeZaView">
+                    <a title="{{text}}">{{lin}}</a>
+                  </option>
+                </select>
+                <br>
+                Dan:<br>
+                <select id="ButtonsHomePage" [(ngModel)]="dan" >
+                    <option *ngFor="let d of dani">
+                      {{d}} 
+                    </option>
+                  </select>
+                </p><br>
+          <br>
 
-    <tr>
-        <td align="left">
-
-          <span class="lightblue-box-label">
-            Linija
-              <br>
-                (Izaberite liniju)
-             </span>
-
-        </td>
-        <td align="left" valign="top">
-          <div id="lista_linija">
-            <select [(ngModel)]="selectedLine" name="selectedLine" (change)="changeselectedLine()">
-              <option *ngFor="let Line of redVoznjeInfo.Lines" [ngValue]="Line">
-                {{Line.SerialNumber}}
-              </option>
-            </select>
-          </div>
-        </td>
-     </tr>
-     <tr>
-
-        <td></td>
-        <td>
-
-        <div align="right">
-          <button class="btn float-right login_btn" (click)="ispisPolaska()" [disabled]="selectedTimetableType.Id==undefined || selectedDayType.Id==undefined || selectedLine.Id==undefined">Prikazi</button>
+          <p ><span class="fa "></span><button  id="ButtonsHomePage" (click)="OnGetPolasci()" >Red voznje</button></p>
+          <br>
+          <p class="paragraf_text">
+          <!-- iz baze:<br> -->
+          {{linija.linije}}
+          Polasci sa stanice:<br>
+          {{ras.polasci}}
+          </p>
+          <!-- <button (click)="JsonParsiranje()" >Json</button> -->
+          <div class="clearfix"></div>
         </div>
-        </td>
-      </tr>
-<tr>
-    <td>
-      <span class="lightblue-box-label"> Polasci sa stanice: </span>
-    </td>
-    <td>{{timetable.Times}}</td>
-  </tr>
-      </tbody>
-      <tr>
-          <td width="210px">
-              <span class="lightblue-box-label"> Kupovina karte </span>
-          </td>
-          <td>
-              <div align="left">
-                <p align="left">{{labelText}}</p>
-              </div>
-              <div align="right">
-                <button align="right" class="btn float-right login_btn" (click)="kupiKartu()" >Kupi</button>
-              </div>
-
-          </td>
-          <td align="left">
-            <!-- <select [(ngModel)]="selectedTicketType" name="selectedTicketType">
-              <option *ngFor="let TicketType of cenovnikInfo.ticketTypes" [ngValue]="TicketType">
-                {{TicketType.Name}}
-              </option>
-            </select>
-
-            <select [(ngModel)]="selectedUserType" name="selectedUserType">
-                <option *ngFor="let UserType of cenovnikInfo.userTypes"  [ngValue]="UserType">
-                  {{UserType.Name}}
-                </option>
-              </select> -->
-              <!-- <input type="text" name="cena" value="{{pricelist.Cena}} din"/> -->
-          </td>
-          </tr>
-    </table>
-  </form>
+        <div class="clearfix"></div>
+        <div class="logo"> JGSP       
+          <div class="clearfix"></div>
+        </div>
+        <app-map id="mapaView" [linija]="selectedLine"></app-map>
+          </div>
+          <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/home">Home!</a></p>
+          <br>
+        </div>
+        <br>
+        <!--<app-karta></app-karta>-->
+      </div>

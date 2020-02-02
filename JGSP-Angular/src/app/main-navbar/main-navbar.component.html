@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/redVoznje">Red voznje <span class="sr-only">(current)</span></a>
+      </li>
+      <li  class="nav-item">
+        <a class="nav-link" routerLink="/lokacijaVozila">Lokacija vozila</a>
+      </li>
+      <li  class="nav-item">
+        <a class="nav-link" routerLink="/cenovnik">Cenovnik</a>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/kupiKartu">Kupi kartu</a>
+      </li>
+      <li *ngIf="!isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/kupiKartuNeregistrovan">Kupi kartu</a>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/mojProfil">Moj Profil</a>
+      </li>
+      <div class="clearfix"></div>
+      <li *ngIf="userRole === 'Admin'" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Administratroske Kontrole
+        </a>
+        <div  class="dropdown-menu" aria-labelledby="dropdown">
+          <a class="dropdown-item" routerLink="/dodajCenovnik">Dodaj novi cenovnik</a>
+          <a class="dropdown-item" routerLink="/obrisiCenovnik">Obrisite cenovnik</a>
+          <a class="dropdown-item" routerLink="/dodajRedVoznje">Dodaj red voznje</a>
+          <a class="dropdown-item" routerLink="/obrisiRedVoznje">Obrisi red voznje</a>
+          <a class="dropdown-item" routerLink="/dodajLiniju">Dodaj liniju</a>
+          <a class="dropdown-item"routerLink="/izbrisiLiniju">Izbrisi Liniju</a>
+          <a class="dropdown-item" routerLink="/dodajStanicu">Dodaj stanicu!</a>
+          <a class="dropdown-item" routerLink="/izbrisiStanicu">Izbrisi stanicu</a>
+          <a class="dropdown-item" routerLink="/promenaCene">Promeni cene karata</a>
+          <a class="dropdown-item" routerLink="/dodajCenovnik">Dodaj novi cenovnik</a>
+          <a class="dropdown-item" routerLink="/obrisiCenovnik">Obrisite cenovnik</a>
+        </div>
+      </li>
+
+      <li *ngIf="userRole === 'Kontrolor'" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Kontrolorske Kontrole
+        </a>
+        <div  class="dropdown-menu" aria-labelledby="dropdown">
+          <a class="dropdown-item" routerLink="/odobrimejl">Odobri registraciju!!</a>
+          <a class="dropdown-item" routerLink="/kontrolor">Proveri kartu putniku!</a>
+        </div>
+      </li> 
+
+    </ul>
+    <ul *ngIf="!isLoggedIn" class="nav navbar-nav navbar-right">
+      <li class="nav-item item">
+        <a class="nav-link" routerLink="/registracija">Registracija<span class="sr-only">(current)</span></a>
+      </li>
+     </ul>
+    <ul *ngIf="!isLoggedIn" class="nav navbar-nav navbar-right">
+      <li class="nav-item item">
+        <a class="nav-link" routerLink="/login">Prijava<span class="sr-only">(current)</span></a>
+      </li>
+  </ul>
+  <ul *ngIf="isLoggedIn" class="nav navbar-nav navbar-right">
+    <li class="nav-item item">
+      <span class="fa "></span><a id="ButtonsHomePage" (click)="LogOut()">Odjava</a>
+    </li>
+   </ul>
+ 
+    <div class="clearfix"></div>
+  </div>
+</nav>

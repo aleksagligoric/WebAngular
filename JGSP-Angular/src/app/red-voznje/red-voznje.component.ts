@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TimetableType } from '../models/timetableType';
-import { Timetable } from '../models/timetable';
-import { Line } from '../models/line';
-import { DayType } from '../models/dayType';
-import { RedVoznjeInfo } from '../models/redVoznjeInfo';
-import { RedVoznjeHttpService } from "../services/redvoznje.service";
-import { cenovnikInfo } from '../models/cenovnikInfo';
-import { UserType } from '../models/userType';
-import { TicketType } from '../models/ticketType';
-import { Pricelist } from '../models/pricelist';
-import { TouchSequence } from 'selenium-webdriver';
+import { AuthHttpService } from 'src/app/services/auth.service';
+import { error } from 'util';
+import { raspored, klasaPodaci } from 'src/app/osoba';
+import { linja } from 'src/app/osoba';
 
 @Component({
   selector: 'app-red-voznje',
@@ -18,65 +11,45 @@ import { TouchSequence } from 'selenium-webdriver';
 })
 export class RedVoznjeComponent implements OnInit {
 
-  redVoznjeInfo:RedVoznjeInfo = new RedVoznjeInfo();
-  cenovnikInfo:cenovnikInfo=new cenovnikInfo();
-  selectedUserType:UserType=new UserType();
-  selectedTicketType:TicketType=new UserType();
-  selectedTimetableType: TimetableType = new TimetableType();
-  selectedDayType: DayType = new DayType();
-  selectedLine: Line = new Line();
-  filteredLines: Line[] = [];
-  timetable: Timetable = new Timetable();
-  pricelist:Pricelist=new Pricelist();
-  ticketPrice: String = new String();
-  labelText = 'Cena karte: 55din';
-
-  constructor(private http: RedVoznjeHttpService) { }
+  polasci: string;
+  constructor(private http: AuthHttpService) { }
+  ras: raspored = new raspored();
+  linija: linja = new linja();
+  klasa: klasaPodaci = new klasaPodaci();
+  selectedLine: number;
+  linijeZaView : number[];
+  dani: string[]=["Radni","Subota","Nedelja"];
+  dan: string;
+  text: string = "Klisa";
 
   ngOnInit() {
-    this.http.getAll().subscribe((redVoznjeInfo) => {
-      this.redVoznjeInfo = redVoznjeInfo;
+    this.http.GetLinije().subscribe((linijesabekenda)=>{
+      this.linijeZaView = linijesabekenda;
       err => console.log(err);
-    });
-
-    this.http.getAllCena().subscribe((cenovnikInfo) => {
-      this.cenovnikInfo = cenovnikInfo;
-      console.log(this.cenovnikInfo);
-      err => console.log(err);
-    });
+    }
+    );
   }
 
-  changeselectedLine(){
-    this.filteredLines.splice(0);
-    this.redVoznjeInfo.Lines.forEach(element => {
-      if(element.SerialNumber == this.selectedLine.SerialNumber){
-        this.filteredLines.push(element);
+
+  OnGetLinije(){
+    this.http.GetLinije().subscribe((linijesabekenda)=>{
+      this.linijeZaView = linijesabekenda;
+      err => console.log(err);
+    }
+    );
+  }
+
+  OnGetPolasci(){
+      this.http.GetPolasci(this.selectedLine, this.dan).subscribe((raspored1)=>{
+        this.ras.polasci = raspored1;
+        err => console.log(err);
       }
-    });
+      );
+  }
+  
+  JsonParsiranje(){
+    this.http.ParsiranjeJson(this.selectedLine, this.dan).subscribe();
   }
 
-  ispisPolaska(){
-    this.http.getSelected(this.selectedTimetableType.Id, this.selectedDayType.Id,this.selectedLine.Id).subscribe((data)=>{
-      this.timetable.Times = data;
-      console.log(this.timetable);
-      err => console.log(err);
-    });
-  }
-
-  kupiKartu(){
-    this.http.postTicket(this.pricelist).subscribe((data) => {
-      this.labelText = 'Id kupljene karte: ' + data;
-      //alert(data);
-    });
-  }
-
-  ispisCena(){
-    this.http.getSelectedCena(this.selectedTicketType.Id, this.selectedUserType.Id).subscribe((data)=>{
-      this.pricelist.TicketTypeId = this.selectedTicketType.Id;
-      this.pricelist.UserTypeId=this.selectedUserType.Id;
-      this.pricelist.Price = data;
-      console.log(this.pricelist.Price);
-      err => console.log(err);
-    });
-  }
+  
 }
