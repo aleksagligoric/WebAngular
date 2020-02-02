@@ -212,172 +212,31 @@ namespace WebApp.Migrations
             kartaDnevna.CenaKarte = cenaKarte;
             cenaKarte.Karte.Add(kartaDnevna);
 
-            try
+           
+            var lajne = context.Linije;
+            foreach (var lajna in lajne)
             {
-
-                using (StreamReader r = new StreamReader("sve.json"))
+                RedVoznje rv1 = new RedVoznje();
+                rv1.DanUNedelji = "RADNI";
+                rv1.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+                RedVoznje rv2 = new RedVoznje();
+                rv2.DanUNedelji = "SUBOTA";
+                rv2.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+                RedVoznje rv3 = new RedVoznje();
+                rv3.DanUNedelji = "NEDELJA";
+                rv3.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+                if (lajna.RedoviVoznje == null)
                 {
-                    string json = "", linijaPodela = "";
-                    string[] linije;
-                    //Stanica s = new Stanica();
-                    //Linija l = new Linija();
-
-                    while ((json = r.ReadLine()) != null)
-                    {
-                        string[] linijaNiz;
-                        Stanica s = new Stanica();
-                        //json = r.ReadLine();
-                        linijaPodela = json.Split('|')[0];
-                        linijaNiz = linijaPodela.Split(',', '[', ']');
-                        s.Adresa = json.Split('|')[3];
-                        string brojX = json.Split('|')[1];
-                        string brojY = json.Split('|')[2];
-                        s.X = double.Parse(brojX);
-                        s.Y = double.Parse(brojY);
-                        s.Naziv = s.Adresa = json.Split('|')[3];
-                        s.Linije = new List<Linija>();
-                        bool stanicaPostoji = false;
-                        List<Linija> stanLinije = new List<Linija>();
-
-                        foreach (var lin in linijaNiz)
-                        {
-                            if (lin != "" && lin != "    \"")
-                            {
-                                Linija l = new Linija() { RedniBroj = lin };
-                                List<Linija> sveLinije = context.Linije.ToList();
-                                bool linijaPostoji = false;
-
-                                foreach (var linija in sveLinije)
-                                {
-                                    if (linija.RedniBroj == lin)
-                                    {
-                                        l = null;
-                                        l = linija;
-                                        linijaPostoji = true;
-                                        break;
-                                    }
-                                }
-
-                                if (linijaPostoji)
-                                {
-                                    List<Stanica> sveStanice = context.Stanice.ToList();
-                                    foreach (var stanica in sveStanice)
-                                    {
-                                        if (stanica.Adresa == s.Adresa && stanica.X == s.X && stanica.Y == s.Y)
-                                        {
-                                            s = null;
-                                            s = stanica;
-                                            stanicaPostoji = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (stanicaPostoji)
-                                    {
-                                        l.Stanice.Add(s);
-                                        s.Linije.Add(l);
-                                        context.Set<Stanica>().Attach(s);
-                                        context.Entry(s).State = EntityState.Modified;
-                                        context.Set<Linija>().Attach(l);
-                                        context.Entry(l).State = EntityState.Modified;
-                                        //continue;
-                                    }
-                                    else
-                                    {
-                                        l.Stanice.Add(s);
-                                        s.Linije.Add(l);
-                                        context.Set<Stanica>().Attach(s);
-                                        context.Entry(s).State = EntityState.Modified;
-                                        context.Set<Linija>().Attach(l);
-                                        context.Entry(l).State = EntityState.Modified;
-                                    }
-
-                                }
-                                else
-                                {
-                                    List<Stanica> sveStanice = context.Stanice.ToList();
-                                    foreach (var stanica in sveStanice)
-                                    {
-                                        if (stanica.Adresa == s.Adresa)
-                                        {
-                                            s = null;
-                                            s = stanica;
-                                            stanicaPostoji = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (stanicaPostoji)
-                                    {
-                                        s.Linije.Add(l);
-                                        context.Set<Stanica>().Attach(s);
-                                        context.Entry(s).State = EntityState.Modified;
-                                    }
-                                    else
-                                    {
-                                        s.Linije = new List<Linija>();
-                                        s.Linije.Add(l);
-                                        context.Set<Stanica>().Attach(s);
-                                        context.Entry(s).State = EntityState.Modified;
-                                    }
-                                    //s.Linije.Add(l);
-                                    l.Stanice = new List<Stanica>();
-                                    l.Stanice.Add(s);
-                                    context.Linije.Add(l);
-                                }
-                            }
-                        }
-
-                        bool saveFailed;
-                        do
-                        {
-                            saveFailed = false;
-
-                            try
-                            {
-                                context.SaveChanges();
-                            }
-                            catch (DbUpdateConcurrencyException ex)
-                            {
-                                saveFailed = true;
-
-                                // Update the values of the entity that failed to save from the store
-                                ex.Entries.Single().Reload();
-                            }
-
-                        } while (saveFailed);
-                    }
+                    lajna.RedoviVoznje = new List<RedVoznje>();
                 }
+                lajna.RedoviVoznje.Add(rv3);
+                lajna.RedoviVoznje.Add(rv1);
+                lajna.RedoviVoznje.Add(rv2);
 
-                var lajne = context.Linije;
-                foreach (var lajna in lajne)
-                {
-                    RedVoznje rv1 = new RedVoznje();
-                    rv1.DanUNedelji = "RADNI";
-                    rv1.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-                    RedVoznje rv2 = new RedVoznje();
-                    rv2.DanUNedelji = "SUBOTA";
-                    rv2.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-                    RedVoznje rv3 = new RedVoznje();
-                    rv3.DanUNedelji = "NEDELJA";
-                    rv3.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-                    if (lajna.RedoviVoznje == null)
-                    {
-                        lajna.RedoviVoznje = new List<RedVoznje>();
-                    }
-                    lajna.RedoviVoznje.Add(rv3);
-                    lajna.RedoviVoznje.Add(rv1);
-                    lajna.RedoviVoznje.Add(rv2);
+                context.Set<Linija>().Attach(lajna);
+                context.Entry(lajna).State = EntityState.Modified;
+            }
 
-                    context.Set<Linija>().Attach(lajna);
-                    context.Entry(lajna).State = EntityState.Modified;
-                }
-            }
-            catch (Exception e)
-            {
-                Trace.TraceInformation("Error while update: " + e.Message);
-            }
-            
 
             context.Karte.Add(kartaDnevna);
             context.CeneKarti.Add(cenaKarte);
