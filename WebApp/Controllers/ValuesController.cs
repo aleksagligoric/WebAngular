@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -80,21 +81,35 @@ namespace WebApp.Controllers
             db.Entry(app).State = EntityState.Modified;
 
             db.SaveChanges();
+           
             string email = mejl.Replace('-', '.');
-            MailMessage mail = new MailMessage("marko.mijatovic.1996@gmail.com", app.Email);
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = true;
-            client.Credentials = new NetworkCredential("marko.mijatovic.1996@gmail.com", "qcfu xays czwu bopw");    //iymr rzbn gpfs bpbg
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.EnableSsl = true;
-            client.Host = "smtp.gmail.com";
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("ervinisljami@gmail.com");
+                mail.To.Add(mejl);
+                mail.Subject = "Odobrenje profila.";
+                mail.Body = "Postovani.\n\nVas nalog je upravo odobren. Sada mozete kupovati karte. Vas GSP.";
+                mail.IsBodyHtml = true;
 
-            mail.Subject = "JGSP";
-            mail.Body = $"Vasa registracija je odobrena {DateTime.Now}. {Environment.NewLine} Sada mozete kupovati karte na nasem servisu. {Environment.NewLine}Hvala na poverenju, JGSP!";
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("ervinisljami@gmail.com", "McQrlak.3137");
+                    smtp.EnableSsl = true;
+                    try
+                    {
+                        smtp.Send(mail);
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceInformation(e.Message);
+                    }
+                }
+            }
 
-            client.Send(mail);
+
+
+
+
             return Ok("Odobrili ste mu registraciju!");
         }
 

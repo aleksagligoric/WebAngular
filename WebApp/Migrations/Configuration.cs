@@ -126,7 +126,7 @@ namespace WebApp.Migrations
             //  to avoid creating duplicate seed data.
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
-                //System.Diagnostics.Debugger.Launch();
+                System.Diagnostics.Debugger.Launch();
             }
 
             Cenovnik cenovnik = new Cenovnik();
@@ -212,32 +212,6 @@ namespace WebApp.Migrations
             kartaDnevna.CenaKarte = cenaKarte;
             cenaKarte.Karte.Add(kartaDnevna);
 
-           
-            var lajne = context.Linije;
-            foreach (var lajna in lajne)
-            {
-                RedVoznje rv1 = new RedVoznje();
-                rv1.DanUNedelji = "RADNI";
-                rv1.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-                RedVoznje rv2 = new RedVoznje();
-                rv2.DanUNedelji = "SUBOTA";
-                rv2.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-                RedVoznje rv3 = new RedVoznje();
-                rv3.DanUNedelji = "NEDELJA";
-                rv3.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-                if (lajna.RedoviVoznje == null)
-                {
-                    lajna.RedoviVoznje = new List<RedVoznje>();
-                }
-                lajna.RedoviVoznje.Add(rv3);
-                lajna.RedoviVoznje.Add(rv1);
-                lajna.RedoviVoznje.Add(rv2);
-
-                context.Set<Linija>().Attach(lajna);
-                context.Entry(lajna).State = EntityState.Modified;
-            }
-
-
             context.Karte.Add(kartaDnevna);
             context.CeneKarti.Add(cenaKarte);
             context.CeneKarti.Add(cenaKarte2);
@@ -287,8 +261,20 @@ namespace WebApp.Migrations
             //context.Users.Add(admin);
             //context.Users.Add(user1);
             //context.Users.Add(user2);
-            
 
+            Slika slika = new Slika();
+            slika.ImageUrl = "C:/Users/ervin/OneDrive/Desktop/WebAngular/WebApp/SlikeKorisnika/Penzioni-Cek.png";
+            slika.Korisnik = user2.Id;
+
+            try
+            {
+                context.Slike.Add(slika);
+            }
+            catch(Exception e)
+            {
+                Trace.TraceInformation(e.Message);
+            }
+            
             try
             {
                 context.SaveChanges();

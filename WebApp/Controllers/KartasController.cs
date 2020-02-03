@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebApp.Models;
 using WebApp.Persistence;
@@ -24,6 +26,8 @@ namespace WebApp.Controllers
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
+        private string userName;
+
         public IUnitOfWork Db { get; set; }
 
         public KartasController(IUnitOfWork db)
@@ -50,12 +54,18 @@ namespace WebApp.Controllers
             List<Karta> karte = Db.Karta.GetAll().ToList();
             //var user = UserManager.FindByName(IdKorisnika);
 
+            if(u == null)
+            {
+                return Ok("Kornisnik ne postoji u bazi");
+            }
+
             string odgovor = "";
             foreach(Karta k1 in karte)
             {
                 if(k1.ApplicationUserId == u.Id)//user.Id)
                 {
                     karta = k1;
+                    break;
                 }
             }
             if (karta == null)
@@ -76,7 +86,7 @@ namespace WebApp.Controllers
                     }
                     else
                     {
-                        odgovor = "Ovom korisniku ne vazi karta, hapsi stoku!";
+                        odgovor = "Ovom korisniku ne vazi karta!";
                     }
                 }
                 else if (karta.Tip == "Mesecna") //&& (DateTime.UtcNow < karta.VaziDo.AddMonths(1)))
@@ -92,7 +102,7 @@ namespace WebApp.Controllers
                     }
                     else
                     {
-                        odgovor = "Ovom korisniku ne vazi karta, hapsi stoku!";
+                        odgovor = "Ovom korisniku ne vazi karta!";
                     }
                 }
                 else if (karta.Tip == "Godisnja") //&& (DateTime.UtcNow < karta.VaziDo.AddYears(1)))
@@ -107,7 +117,7 @@ namespace WebApp.Controllers
                     }
                     else
                     {
-                        odgovor = "Ovom korisniku ne vazi karta, hapsi stoku!";
+                        odgovor = "Ovom korisniku ne vazi karta!";
                     }
                 }
                 else if (karta.Tip == "Vremenska") //&& (DateTime.UtcNow < karta.VaziDo.AddHours(1)))
@@ -122,12 +132,12 @@ namespace WebApp.Controllers
                     }
                     else
                     {
-                        odgovor = "Ovom korisniku ne vazi karta, hapsi stoku!";
+                        odgovor = "Ovom korisniku ne vazi karta!";
                     }
                 }
                 else
                 {
-                    odgovor = "Ovom korisniku ne vazi karta, hapsi stoku!";
+                    odgovor = "Ovom korisniku ne vazi karta!";
                 }
 
             }
@@ -167,7 +177,7 @@ namespace WebApp.Controllers
         public IHttpActionResult GetKartaCena(string tipKarte, string tipKupca, int cena)
         {
             //POTREBNO JE PRAVITI NOVI CENOVNIK KADA SE PROMENI CENA KARTE
-            List<CenaKarte> karte = Db.CenaKarte.GetAll().ToList();
+             List<CenaKarte> karte = Db.CenaKarte.GetAll().ToList();
             List<Cenovnik> cenovnici = Db.Cenovnik.GetAll().ToList();
             Cenovnik cen = Db.Cenovnik.GetAll().Where(t => t.VaziDo > DateTime.UtcNow && t.VaziOd < DateTime.UtcNow).FirstOrDefault();
 
@@ -182,6 +192,7 @@ namespace WebApp.Controllers
                     Db.CenaKarte.Update(k);
                    
                     Db.Complete();
+                    break;
                 }
             }
             odg += " rsd.";
@@ -244,14 +255,18 @@ namespace WebApp.Controllers
             db.SaveChanges();
             return Ok();
         }
+        
         [AllowAnonymous]
         [ResponseType(typeof(string))]
-        [Route("GetKartaKupi2/{tipKarte}/{mejl}")]
-        public IHttpActionResult GetKarta(string tipKarte, string mejl)
+        [HttpPost]
+        [Route("GetKartaKupi2")]
+        public IHttpActionResult GetKarta([FromBody] Dictionary<string, object> map)
         {
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
-     
+            string tipKarte = map["tipKarte"].ToString();
+            string mejl = map["mejl"].ToString();
+
             Karta novaKarta = new Karta();
             string tipKorisnika;
             var id = User.Identity.GetUserId();
@@ -272,7 +287,8 @@ namespace WebApp.Controllers
 
 
 
-            CenaKarte ck = Db.CenaKarte.GetAll().Where(t => t.TipKarte == tipKarte && t.TipKupca == tipKorisnika && t.CenovnikId ==cen.IdCenovnik).FirstOrDefault();
+            CenaKarte ck = Db.CenaKarte.GetAll().FirstOrDefault(t => t.TipKarte == tipKarte && t.TipKupca.Equals("Obican"));
+
            // novaKarta.CenaKarte = ck;
             novaKarta.CenaKarteId = ck.IdCenaKarte;
 
@@ -309,21 +325,32 @@ namespace WebApp.Controllers
             else if (u == null)
             {
                 string email = mejl.Replace('-', '.');
-                MailMessage mail = new MailMessage("marko.mijatovic.1996@gmail.com", email);
-                SmtpClient client = new SmtpClient();
-                client.Port = 587;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = true;
-                client.Credentials = new NetworkCredential("marko.mijatovic.1996@gmail.com", "qcfu xays czwu bopw");    //iymr rzbn gpfs bpbg
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.EnableSsl = true;
-                client.Host = "smtp.gmail.com";
-             
-                mail.Subject = "JGSP";
-                mail.Body = $"Uspesno ste kupili kartu za {DateTime.Now}. {Environment.NewLine} Broj karte: {novaKarta.IdKarte} {Environment.NewLine}Hvala na poverenju, JGSP!";
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("ervinisljami@gmail.com");
+                    mail.To.Add(mejl);
+                    mail.Subject = "Kupili ste kartu.";
+                    mail.Body = "Cestitamo kupili ste kartu. Nice.";
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new NetworkCredential("ervinisljami@gmail.com", "McQrlak.3137");
+                        smtp.EnableSsl = true;
+                        try
+                        {
+                            smtp.Send(mail);
+                        }
+                        catch(Exception e)
+                        {
+                            Trace.TraceInformation(e.Message);
+                        }
+                    }
+                }
+
                 try
                 {
-                    client.Send(mail);
+                    //client.Send(mail);
                     cena = ck.Cena;
                     povratna = "Uspesno ste kupili " + tipKarte + "-u" + " kartu, po ceni od |" + cena.ToString() + "| rsd, hvala vam, vas gsp!";
 

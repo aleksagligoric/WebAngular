@@ -53,28 +53,6 @@ namespace WebApp.Controllers
             IQueryable<Linija> linije = Db.Linija.GetAll().AsQueryable();
             var client = new HttpClient();
             var content = client.GetStringAsync("http://www.gspns.co.rs/red-voznje/ispis-polazaka?rv=rvg&vaziod=2020-01-04&dan=R&linija%5B%5D=4*");
-
-
-            string retvalue = "n";
-            foreach (Linija l in linije)
-            {
-                if (l.RedniBroj == id)
-                {
-                    foreach (RedVoznje red in l.RedoviVoznje)
-                    {
-                        if (red.DanUNedelji == dan)
-                        {
-                            retvalue = red.Polasci;
-                        }
-                    }
-                }
-            }
-            if (retvalue == "n")
-            {
-                return NotFound();
-            }
-
-
             //using (StreamReader r = new StreamReader("C:/Users/ervin/OneDrive/Desktop/WebAngular/podaci.json"))
             //{
             //    string json = "", linijaPodela = "";
@@ -190,6 +168,50 @@ namespace WebApp.Controllers
             //        }
             //    }
             //}
+
+            //var lajne = Db.Linija.GetAll();
+            //foreach (var lajna in lajne)
+            //{
+            //    RedVoznje rv1 = new RedVoznje();
+            //    rv1.DanUNedelji = "RADNI";
+            //    rv1.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+            //    RedVoznje rv2 = new RedVoznje();
+            //    rv2.DanUNedelji = "SUBOTA";
+            //    rv2.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+            //    RedVoznje rv3 = new RedVoznje();
+            //    rv3.DanUNedelji = "NEDELJA";
+            //    rv3.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+            //    if (lajna.RedoviVoznje == null)
+            //    {
+            //        lajna.RedoviVoznje = new List<RedVoznje>();
+            //    }
+            //    lajna.RedoviVoznje.Add(rv3);
+            //    lajna.RedoviVoznje.Add(rv1);
+            //    lajna.RedoviVoznje.Add(rv2);
+            //}
+            //Db.Complete();
+
+            string retvalue = "n";
+            foreach (Linija l in linije)
+            {
+                if (l.RedniBroj == id)
+                {
+                    foreach (RedVoznje red in l.RedoviVoznje)
+                    {
+                        if (red.DanUNedelji == dan)
+                        {
+                            retvalue = red.Polasci;
+                        }
+                    }
+                }
+            }
+            if (retvalue == "n")
+            {
+                return NotFound();
+            }
+
+
+
 
 
 
@@ -365,7 +387,7 @@ namespace WebApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Linijas
+        // POST: api/Linijas 
         [AllowAnonymous]
         [ResponseType(typeof(string))]
         [Route("GetLinijaDodaj/{linija}")]

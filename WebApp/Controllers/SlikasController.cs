@@ -115,6 +115,7 @@ namespace WebApp.Controllers
                         {
 
                             Db.Slika.Add(slika);
+                            Db.Slika.Update(slika);
                             Db.Complete();
                         }
                         catch (Exception e) { }
