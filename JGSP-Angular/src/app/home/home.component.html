@@ -9,100 +9,32 @@
 <!-- Include the above in your HEAD tag -->
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<div id="intro" class="view">
+  <div class="mask rgba-black-strong">
 
-<div class="main">
-  <div class="container">
-  <div class="middle">
-        <div id="login">
-            <fieldset class="clearfix">
-              <p ><span class="fa "></span><a id="ButtonsHomePage" (click)="DaLiJeVerifikovan()">Verifikovan?</a><label class="paragraf_text">{{verifikovan}}</label></p>
-          <div *ngIf="!jwtIsUndefined(); else logOut">
-              <br>
-              <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/login">Login</a></p>
-            <br>
-            <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/registracija">Registracija</a></p>
-            <br>
-            <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/kupiKartuNeregistrovan">Kupi kartu neregistrovan!</a></p>
+      <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+          <div class="row d-flex justify-content-center text-center">
+
+              <div class="col-md-12">
+
+               
+
+                  <!-- Divider -->
+                  <hr class="hr-light">
+
+                  <!-- Description -->
+                  <h2 class="subheadline">JGSP</h2>
+
+              </div>
 
           </div>
-          <div >
-          <ng-template #logOut>
-            <br>
-            <p ><span class="fa "></span><a id="ButtonsHomePage" (click)="LogOut()">LogOut</a></p>
-            <br>
-            <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/mojProfil">Moj Profil!</a></p>
-            <br>
-          <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/kupiKartu">Kupi kartu</a></p>
-          </ng-template>
-          <br>
-          <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/redVoznje">Red voznje</a></p>
-          <br>
-          <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/cenovnik">Cenovnik!</a></p>
-          <br>
-          <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/lokacijaVozila">Lokacija vozila!</a></p>
-        </div>
-
-      
-          <br>
-          <div *ngIf="daLiJeKontrolor();">
-              <br>  
-              <b><p class="paragraf_text">Zdravo kontolor, ovo su vase metode!</p></b>
-              <br>
-              <br>
-              <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/odobrimejl">Odobri registraciju!!</a></p>
-              <br>
-          <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/kontrolor">Proveri kartu putniku!</a></p>
-      </div>
-            <br>
-
-         
-          <br>
-        
-        </fieldset>
-        <div class="clearfix"></div>
-        </div>
-        <div class="clearfix"></div>
-        <div > <p class="logo" style="position: absolute; right: -30%;"> JGSP</p>       
-										<div class="clearfix"></div>
-										<br>
-                    <div *ngIf="DaLiJeAdmin();" style="position: absolute; right: 10%; bottom: -20%;">
-                        <p class="paragraf_text">Zdravo admire, ovo su vase metode!</p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/dodajCenovnik">Dodaj novi cenovnik!!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/obrisiCenovnik">Obrisite cenovnik!!</a></p>
-            
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/dodajRedVoznje">Dodaj red voznje!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/obrisiRedVoznje">Obrisi red voznje!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/dodajLiniju">Dodaj liniju!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/dodajStanicu">Dodaj stanicu!</a></p>
-                      
-                                <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/spojiStanicaLinija">Spoji stanicu sa linijom!</a></p>
-                                <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/izbrisiStanicu">Izbrisi stanicu!</a></p>
-                                <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/izbrisiLiniju">Izbrisi Liniju!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/promenaCene">Promeni cene karata!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/dodajCenovnik">Dodaj novi cenovnik!</a></p>
-                      <br>
-                      <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/obrisiCenovnik">Obrisite cenovnik!!</a></p>
-                     
-                    </div>
-        </div>
-        
 
       </div>
-      
+
   </div>
-  
-<!--<app-karta></app-karta>-->
 </div>
+<!--<app-karta></app-karta>-->
+
 
 

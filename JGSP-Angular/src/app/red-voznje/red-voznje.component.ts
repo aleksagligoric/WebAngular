@@ -17,7 +17,7 @@ export class RedVoznjeComponent implements OnInit {
   linija: linja = new linja();
   klasa: klasaPodaci = new klasaPodaci();
   selectedLine: number;
-  linijeZaView : number[];
+  linijeZaView : any[];
   dani: string[]=["RADNI","SUBOTA","NEDELJA"];
   dan: string;
   text: string = "Klisa";

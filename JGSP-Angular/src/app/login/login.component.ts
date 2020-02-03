@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginToNavbarService } from '../services/login-to-navbar.service';
 import { MainNavbarComponent } from '../main-navbar/main-navbar.component';
+import { MainNavbarService } from '../main-navbar/main-navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { MainNavbarComponent } from '../main-navbar/main-navbar.component';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: AuthHttpService, private router: Router) { }
+  constructor(private http: AuthHttpService, private router: Router, public service: MainNavbarService) { }
 
   isLogin: boolean = false;
   loginToNavBar:LoginToNavbarService=new LoginToNavbarService();
@@ -25,6 +26,8 @@ export class LoginComponent implements OnInit {
     let l = this.http.logIn(user.username, user.password);
     this.loginToNavBar.login();
     form.resetForm();
+
+    this.service.newLogin.next(true);
    
     this.router.navigate(["/home"]);
   

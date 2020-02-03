@@ -28,6 +28,7 @@
           <p ><span class="fa fa-lock"></span><input type="password" formControlName="confirmPassword" required></p>
           <p ><span class="fa fa-user"></span><input  type="email" formControlName="email" required></p><br>
           <p><span class="fa fa-user"></span><input type="date" formControlName="date" required></p><br>
+          <div class="clearfix" *ngIf="(userRole != 'Admin' && userRole != 'Kontrolor')">
           <p>
             <select formControlName="tip" >
               <option *ngFor="let t of tipovi">
@@ -37,6 +38,7 @@
           <br>
           
           </p>
+          </div>
            <div>
 
                               <span style="width:100%; text-align:right;  display: inline-block;"><input type="submit" value="Promeni podatke"></span>
@@ -48,11 +50,12 @@
 <div class="clearfix"></div>
       </form>
       <br>
-      <form action="/action_page.php">
-        <input type="file" name="pic" accept="image/*">
-        <span style="width:100%; text-align:right;  display: inline-block;"><input type="submit" value="Submit"></span>
-      </form>
-     
+      <div class="clearfix" *ngIf="(userRole != 'Admin' && userRole != 'Kontrolor')">
+        <form action="/action_page.php">
+          <input type="file" name="pic" accept="image/*">
+          <span style="width:100%; text-align:right;  display: inline-block;"><input type="submit" value="Submit"></span>
+        </form>
+      </div>
       <div class="clearfix"></div>
       <p ><span class="fa "></span><a id="ButtonsHomePage" routerLink="/home">Home!</a></p>
     </div> <!-- end login -->

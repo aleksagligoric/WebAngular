@@ -36,19 +36,29 @@ export class RegistracijaComponent implements OnInit {
 
   onSubmit(){
     let regModel: RegUser = this.registacijaForm.value;
-    this.http.reg(regModel).subscribe( x =>{
-      if(this.slika != null){
-        const fData : FormData = new FormData();
-        fData.append('Img', this.slika, this.slika.name);
-        console.log(fData)
-        this.http.regImg(fData, regModel.username).subscribe();    
-      }
-      else{
-        alert("Uspesno ste se registrovali");
-        this.router.navigate(["/login"])
-      }
-
+    this.http.reg(regModel).subscribe( 
+      x =>
+      {
+        if(this.slika != null)
+        {
+          const fData : FormData = new FormData();
+          fData.append('Img', this.slika, this.slika.name);
+          console.log(fData)
+          this.http.regImg(fData, regModel.username).subscribe();
+          alert("Uspeno ste se registrovali")
+          this.router.navigate(["/login"])    
+        }
+        else
+        {
+          alert("Uspesno ste se registrovali");
+          this.router.navigate(["/login"])
+        }
+    },
+    error =>
+    {
+      alert("Uneti podaci nisu validni. Molimo vas proverite podatke opet. Sifra mora sadrzati jedno veliko, jedno malo slovo, bar jedan specijalni karakter i jedan broj. Takodje sifra mora imati bar 6 karaktera.");
     }
+    
       
     );
    

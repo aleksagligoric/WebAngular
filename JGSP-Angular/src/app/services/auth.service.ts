@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { RegUser, RegUserImg } from 'src/app/osoba';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { RegUser, RegUserImg, Test, LinijaZaHub } from 'src/app/osoba';
 import { Stanica } from 'src/app/osoba';
 import { RedVoznje } from 'src/app/osoba';
 import { CenovnikBindingModel } from 'src/app/osoba';
@@ -10,9 +10,14 @@ import { Observable } from 'rxjs/internal/Observable';
 @Injectable()
 export class AuthHttpService{
     base_url = "http://localhost:52295"
-  constructor(private http: HttpClient){
-      
-    }
+  constructor(private http: HttpClient){ }
+  
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+
   user: string
     logIn(username: string, password: string): Observable<boolean> | boolean{
         let isDone: boolean = false;
@@ -48,6 +53,7 @@ export class AuthHttpService{
     reg(data: RegUser) : Observable<any>{
         return this.http.post<any>(this.base_url + "/api/Account/Register", data);
     }
+
     regImg(data: any, username: string) : Observable<any>{    
         return this.http.post<any>(this.base_url + "/api/Slikas/UploadImage/" + username, data);
     }
@@ -112,9 +118,15 @@ export class AuthHttpService{
     GetPromenaCene(tip: string, tipPutnika: string, cena : number): Observable<any>{
         return this.http.get<any>(this.base_url + "/api/Kartas/GetKartaPromenaCene/" + tip + "/" + tipPutnika + "/" + cena);
     }
-    GetKupiKartu(tipKarte: string, mejl: string): Observable<any>{
-       
-        return this.http.get<any>(this.base_url + "/api/Kartas/GetKartaKupi2/" + tipKarte  + "/" + mejl);
+
+    
+    GetKupiKartu(tipKarte: string, mejl: string): Observable<any>
+    {
+        var requestBody = new Test();
+        requestBody.tipKarte = tipKarte;
+        requestBody.mejl = mejl;
+
+        return this.http.post<any>(this.base_url + "/api/Kartas/GetKartaKupi2/", requestBody, this.httpOptions);
     }
     GetKupiKartuNeregistrovan(tipKarte: string, mejl :string): Observable<any>{
        
@@ -132,6 +144,14 @@ export class AuthHttpService{
     }
     Verifikovan(): Observable<any>{
         return this.http.get<any>(this.base_url + "/api/Values/Verifikovan");
+    }
+    StanicaZaHub(lin: LinijaZaHub): Observable<any>{
+        let httpOptions = {
+            headers:{
+                "Content-type":"application/json"
+            }
+        }
+        return this.http.post<any>(this.base_url + "/api/Lokacija/StaniceZaHub", lin, httpOptions);
     }
 
 }

@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { GeoLocation } from '../map/map-model/geolocation';
 import { MarkerInfo } from '../map/map-model/marker-info.model';
 import { AuthHttpService } from '../services/auth.service';
 import { Polyline } from '../map/map-model/polyline';
+import { raspored, klasaPodaci, linja, LinijaZaHub } from 'src/app/osoba';
+import { LokacijaVozilaService } from '../services/lokacija.vozila.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lokacija-vozila',
@@ -11,86 +14,123 @@ import { Polyline } from '../map/map-model/polyline';
   styles: ['agm-map {height: 500px; width: 700px;}']
 })
 export class LokacijaVozilaComponent implements OnInit {
-
-  @Input()
-  linija: string;
-  x: number;
-  y: number;
-  mrakerInfoMoj: MarkerInfo;
-  markeri: MarkerInfo[];
-  markerInfo: MarkerInfo;
-  public polyline: Polyline;
-  public zoom: number;
+  isConnected: Boolean;
+  locations: string[];
+  polasci: string;
+  ras: raspored = new raspored();
+  linija: linja = new linja();
+  klasa: klasaPodaci = new klasaPodaci();
+  selectedLine: number;
+  linijeZaView: number[];
+  dani: string[] = ["Radni", "Subota", "Nedelja"];
+  dan: string;
+  text: string = "Klisa";
+  markeri: MarkerInfo[] = [];
+  busKordinate: string[];
+  autobusMarker: MarkerInfo;
   public polylineMoje: Polyline;
-  public nizKordinata: Cord[];
+  promena: boolean = false;
+
+  constructor(private lokacijaServis: LokacijaVozilaService, private http: AuthHttpService, private ngZone: NgZone, private router: Router) {
+    this.isConnected = false;
+    this.locations = [];
+    this.lokacijaServis;
+  }
 
   ngOnInit() {
-    this.mrakerInfoMoj = new MarkerInfo(new GeoLocation(this.x, this.y), 
-      "assets/busicon.png",
-      "Stanica" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka"); 
-    this.markerInfo = new MarkerInfo(new GeoLocation(45.242268, 19.842954), 
-       "assets/ftn.png",
-       "Jugodrvo" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
-
-    this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
-    this.polylineMoje = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
-  }
-
-  constructor(private http: AuthHttpService){
-  }
-
-  placeMarker($event){
-    this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng))
-    //console.log(this.polyline)
-  }
-
-  placeMarkerLinije(x, y){
-    this.polylineMoje.addLocation(new GeoLocation(x, y))
-    
-    console.log(this.polylineMoje)
-  }
-
-  ShowStanica(idStanice: string){
-    idStanice = this.linija;
-    this.http.GetStanicaCord(idStanice).subscribe((raspored1)=>{
-      this.nizKordinata = raspored1;
+    this.promena = false;
+    this.polylineMoje = new Polyline([], 'blue', { url: "assets/lasta.jpg", scaledSize: { width: 50, height: 50 } });
+    this.http.GetLinije().subscribe((linijesabekenda) => {
+      this.linijeZaView = linijesabekenda;
       err => console.log(err);
-    }
-    );
-    
-    //for(var i = 0; i <= this.nizKordinata.length; i++){
-      // var g = new GeoLocation(0,0);
-      // g.latitude = this.nizKordinata[i][0];
-      // g.longitude = this.nizKordinata[i][1];
-      //console.log(this.nizKordinata)
-      //var g = new Cord();
-      //g = this.nizKordinata[i];
-      console.log(this.nizKordinata);
-      this.nizKordinata.forEach(station => {
-        let stationToPush: Cord = {
-          x: station.x,
-          y: station.y,
-          name: station.name,
-        };
-        this.placeMarkerLinije(station.y, station.x);
     });
+    this.subscribeForLocations();
+    this.checkConnection();
 
-    
+    //this.lokacijaServis.registerForLocation();
   }
 
-  HideStanica(){
-    this.nizKordinata = [];
-    // this.mrakerInfoMoj = new MarkerInfo(new GeoLocation(45.242268, 19.842954),
-    //   "assets/ftn.png",
-    //   "Jugodrvo", "", "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
-    this.polyline = new Polyline([], 'blue', null);
+  private checkConnection() {
+    this.lokacijaServis.startConnection().subscribe(e => {
+    this.isConnected = e;
+      console.log(e);
+      if (e) {
+        //this.lokacijaServis.StartTimer();
+      }
+    });
+  }
+
+  private subscribeForLocations() {
+    this.lokacijaServis.registerForLocation().subscribe(l => this.onNotification(l));
+  }
+
+  public onNotification(notification: number[]) {
+
+    this.ngZone.run(() => {
+      console.log(notification);
+      if(this.promena){
+
+      
+      //let busevi = notification.split(";");
+      //busevi.forEach(element => {
+      //let temp = busevi[0].split("_");
+      //if(temp[0] == this.selectedLinija)
+      let kord1 = notification[0];
+      let kord2 = notification[1];
+      //this.busKordinate = temp;
+      if (kord1 != undefined && kord2 != undefined) {
+        //var x = parseFloat(this.busKordinate[1].replace(',', '.'));
+        //var y = parseFloat(this.busKordinate[0].replace(',', '.'));
+
+        this.autobusMarker = new MarkerInfo(new GeoLocation(kord2, kord1), "assets/lasta.jpg", "", "", "");
+        this.polylineMoje.addLocation(new GeoLocation(+kord2, +kord1));
+        this.markeri.push(this.autobusMarker);
+      }
+    }
+    });
+  }
+
+  onSelectionChangeNumber(event) {
+    this.promena = true;
+    //this.stations = [];
+    this.polylineMoje.path = [];
+    if (event.target.value == "") {
+      this.promena = false;
+      //this.stations = [];
+      this.polylineMoje.path = [];
+      this.stopTimer();
+    } else {
+      this.checkConnection();
+      this.subscribeForLocations();
+      //this.stopTimer();
+      //this.getStationsByLineNumber(event.target.value); 
+      this.stopTimer();
+      var lin = new LinijaZaHub(event.target.value);
+      this.http.StanicaZaHub(lin).subscribe();
+      //this.lokacijaServis.notificationReceived.subscribe(l => this.onNotification(l));
+      //  this.notifForBL.StartTimer(); 
+    }
+
+  }
+
+  OnGetPolasci() {
+    this.lokacijaServis.StartTimer();
+    this.lokacijaServis.notificationReceived.subscribe(l => this.onNotification(l));
+    //this.polylineMoje.addLocation(new GeoLocation(+this.busKordinate[1], +this.busKordinate[0]));
+  }
+
+  stopTimer() {
+    this.lokacijaServis.StopTimer();
+  }
+
+  public startTimer() {
+    this.lokacijaServis.StartTimer();
+  }
+
+  Stop(){
+    this.lokacijaServis.StopTimer();
     this.polylineMoje = new Polyline([], 'blue', null);
-    //this.placeMarkerLinije(45.242268, 19.842954); 
+    this.markeri = [];
   }
-}
 
-class Cord{
-  x: number;
-  y: number;
-  name: string;
 }

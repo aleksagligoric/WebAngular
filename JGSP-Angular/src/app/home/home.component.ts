@@ -12,9 +12,11 @@ export class HomeComponent implements OnInit {
   verifikovan: string;
   role : any;
   bul :boolean
-  constructor(private service: AuthHttpService, private ruter: Router) { }
+  constructor(private service: AuthHttpService, private ruter: Router) {
+   }
 
   jwtIsUndefined() : boolean{
+    console.log('r')
     return localStorage.getItem('jwt') != "null" && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != "";
   }
  
@@ -57,6 +59,7 @@ export class HomeComponent implements OnInit {
     }
   
   this.verifikovan = null;
+
 }
 
 }

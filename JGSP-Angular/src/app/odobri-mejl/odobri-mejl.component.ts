@@ -36,6 +36,7 @@ export class OdobriMejlComponent implements OnInit {
     this.http.GetSlika(this.selectedMejl).subscribe((slika) =>
       {
         this.slika = 'data:image/jpeg;base64,' + slika;
+        alert("Korisnik stavio sliku: " + slika)
       }, err =>{
         if(err.status === 400) {
           this.slika = null;

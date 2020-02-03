@@ -4,6 +4,11 @@ export class Osoba{
     
 }
 
+export class Test {
+    tipKarte: string
+    mejl: string
+}
+
 export class User{
     username: string
     password: string
@@ -29,7 +34,12 @@ export class RegUserImg{
     date: string
     img: File
 }
-
+export class LinijaZaHub{
+    imeLinije: string
+    constructor(i: string){
+        this.imeLinije = i;
+    }
+}
 export class raspored {
     polasci : string
 

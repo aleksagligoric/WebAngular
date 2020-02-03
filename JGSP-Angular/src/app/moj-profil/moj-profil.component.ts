@@ -17,6 +17,7 @@ export class MojProfilComponent implements OnInit {
   tipovi: string[] = ["Admin", "Student", "Penzioner", "Obican"];
   tip: string;
   profil1 : Profil;
+  userRole:string;
   constructor(private http: AuthHttpService, private fb: FormBuilder, private router: Router) { }
   registacijaForm = this.fb.group({
     name: ['', Validators.required],
@@ -30,6 +31,16 @@ export class MojProfilComponent implements OnInit {
   });
   
   ngOnInit() {
+    if(localStorage.getItem('jwt') != "null" && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != ""){
+      let jwtData = localStorage.jwt.split('.')[1]
+      let decodedJwtJsonData = window.atob(jwtData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
+  
+      if(localStorage.jwt !== undefined){
+        
+        this.userRole = decodedJwtData.role;
+      }
+  }
     this.http.GetKorisnika().subscribe((profil)=>
     {
       this.profil1 = profil;
