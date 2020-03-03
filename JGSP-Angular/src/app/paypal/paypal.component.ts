@@ -1,103 +1,42 @@
-import { Component, OnInit, AfterViewChecked, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
  
-declare let paypal: any;
+declare var paypal;
+
 
 @Component({
   selector: 'app-paypal',
   templateUrl: './paypal.component.html',
   styleUrls: ['./paypal.component.css']
 })
+
 export class PaypalComponent implements OnInit {
+  @ViewChild('paypal', { static: true }) paypalElement: ElementRef;
 
   ngOnInit() {
-  }
-  // @Input()
-  // public cena: number;
-
-  // addScript: boolean = false;
-  // paypalLoad: boolean = true;
-  
-  // finalAmount: number = this.cena;
- 
-  // paypalConfig = {
-  //   env: 'sandbox',
-  //   client: {
-  //     sandbox: 'marko_srb-facilitator@hotmail.rs',
-  //     production: 'access_token$sandbox$rxmzt3yrz365v9cy$c304ff9fac12f48c4426b7697aeb2550'
-  //   },
-  //   commit: true,
-  //   payment: (data, actions) => {
-  //     return actions.payment.create({
-  //       payment: {
-  //         transactions: [
-  //           { amount: { total: this.finalAmount, currency: 'INR' } }
-  //         ]
-  //       }
-  //     });
-  //   },
-  //   onAuthorize: (data, actions) => {
-  //     return actions.payment.execute().then((payment) => {
-  //       alert("Uspesno ste obavili placanje!");
-  //     })
-  //   }
-  // };
- 
-  // ngAfterViewChecked(): void {
-  //   if (!this.addScript) {
-  //     this.addPaypalScript().then(() => {
-  //       paypal.Button.render(this.paypalConfig, '#paypal-checkout-btn');
-  //       this.paypalLoad = false;
-  //     })
-  //   }
-  // }
-  
-  // addPaypalScript() {
-  //   this.addScript = true;
-  //   return new Promise((resolve, reject) => {
-  //     let scripttagElement = document.createElement('script');    
-  //     scripttagElement.src = 'https://www.paypalobjects.com/api/checkout.js';
-  //     scripttagElement.onload = resolve;
-  //     document.body.appendChild(scripttagElement);
-  //   })
-  // }
-
-
-  private loadExternalScript(scriptUrl: string) {
-    return new Promise((resolve, reject) => {
-      const scriptElement = document.createElement('script')
-      scriptElement.src = scriptUrl
-      scriptElement.onload = resolve
-      document.body.appendChild(scriptElement)
-  })}
-
-  ngAfterViewInit(): void {
-    this.loadExternalScript("https://www.paypalobjects.com/api/checkout.js").then(() => {
-      paypal.Button.render({
-        env: 'sandbox',
-        client: {
-          production: 'xxxxxxxxxx',
-          sandbox: 'AWlMGZwpQbS0dq_r2Dt0ejp1TxDm72JD7Pt4Uc2mYlihAE3FU5axxS9wr4HcnVc13gB7TcbYDVLp9Vne'
-        },
-        commit: true,
-        payment: function (data, actions) {
-          return actions.payment.create({
-            payment: {
-              transactions: [
-                {
-                  amount: { total: '1.00', currency: 'USD' }
+    paypal
+      .Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                description: "Karta",
+                amount: {
+                  currency_code: 'USD',
+                  value: 1
                 }
-              ]
-            }
-          })
+              }
+            ]
+          });
         },
-        onAuthorize: function(data, actions) {
-          return actions.payment.execute().then(function(payment) {
-            // TODO
-          })
+        onApprove: async (data, actions) => {
+          const order = await actions.order.capture();
+          console.log(order);
+        },
+        onError: err => {
+          console.log(err);
         }
-      }, '#paypal-button');
-    });
+      })
+      .render(this.paypalElement.nativeElement);
   }
- 
 }

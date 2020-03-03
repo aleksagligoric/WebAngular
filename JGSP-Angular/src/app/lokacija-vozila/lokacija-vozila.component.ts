@@ -70,21 +70,14 @@ export class LokacijaVozilaComponent implements OnInit {
       console.log(notification);
       if(this.promena){
 
-      
-      //let busevi = notification.split(";");
-      //busevi.forEach(element => {
-      //let temp = busevi[0].split("_");
-      //if(temp[0] == this.selectedLinija)
-      let kord1 = notification[0];
-      let kord2 = notification[1];
-      //this.busKordinate = temp;
-      if (kord1 != undefined && kord2 != undefined) {
-        //var x = parseFloat(this.busKordinate[1].replace(',', '.'));
-        //var y = parseFloat(this.busKordinate[0].replace(',', '.'));
+        let kord1 = notification[0];
+        let kord2 = notification[1];
+        if (kord1 != undefined && kord2 != undefined) {
+          
+          //aleksa stavi drugu sliku
 
-        this.autobusMarker = new MarkerInfo(new GeoLocation(kord2, kord1), "assets/lasta.jpg", "", "", "");
-        this.polylineMoje.addLocation(new GeoLocation(+kord2, +kord1));
-        this.markeri.push(this.autobusMarker);
+          this.autobusMarker = new MarkerInfo(new GeoLocation(kord2, kord1), "", "", "", "");
+
       }
     }
     });

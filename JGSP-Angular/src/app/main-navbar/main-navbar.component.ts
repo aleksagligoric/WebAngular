@@ -17,7 +17,7 @@ export class MainNavbarComponent implements OnInit {
 
   LogOut(){
     this.userRole = undefined;
-    this.isLoggedIn = undefined;
+    this.isLoggedIn = false;
     localStorage.setItem('jwt', undefined);
     this.ruter.navigate(['home']); 
   }
@@ -33,8 +33,13 @@ export class MainNavbarComponent implements OnInit {
     this.readLocal();
 }
 
-private readLocal(): void {
+private readLocal(): void 
+{
+
   if(localStorage.getItem('jwt') != "null" && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != ""){
+    if(localStorage.jwt == undefined)
+      return;
+
     let jwtData = localStorage.jwt.split('.')[1]
     let decodedJwtJsonData = window.atob(jwtData)
     let decodedJwtData = JSON.parse(decodedJwtJsonData)
@@ -43,7 +48,6 @@ private readLocal(): void {
       this.isLoggedIn = true;
       this.userRole = decodedJwtData.role;
     }
+  }
 }
-}
-
 }

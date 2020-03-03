@@ -1,9 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
-declare var $: any;
+declare var $;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+}
+)
 export class LokacijaVozilaService {
  
   private proxy: any;  

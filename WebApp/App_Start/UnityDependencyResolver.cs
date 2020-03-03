@@ -13,6 +13,7 @@ using WebApp.Persistence;
 using WebApp.Persistence.Repository;
 using WebApp.Persistence.UnitOfWork;
 using WebApp.Providers;
+using WebApp.Hubs;
 
 namespace WebApp.App_Start
 {
@@ -61,13 +62,7 @@ namespace WebApp.App_Start
 
         public void RegisterTypes()
         {
-            // NOTE: To load from web.config uncomment the line below.
-            // Make sure to add a Unity.Configuration to the using statements.
-            // container.LoadConfiguration();
-
-            // TODO: Register your type's mappings here.
-            // container.RegisterType<IProductRepository, ProductRepository>();
-           
+         
             container.RegisterType<DbContext, ApplicationDbContext>(new PerResolveLifetimeManager());
             container.RegisterType<IRepositoryVozlio, VoziloRepository>();
             container.RegisterType<IRepositoryLinija, LinijaRepository>();

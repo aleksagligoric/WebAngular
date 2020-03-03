@@ -57,7 +57,7 @@
         <a class="nav-link" routerLink="/registracija">Registracija<span class="sr-only">(current)</span></a>
       </li>
      </ul>
-    <ul *ngIf="!isLoggedIn" class="nav navbar-nav navbar-right">
+    <ul *ngIf="!isLoggedIn || isLoggedIn" class="nav navbar-nav navbar-right">
       <li class="nav-item item">
         <a class="nav-link" routerLink="/login">Prijava<span class="sr-only">(current)</span></a>
       </li>

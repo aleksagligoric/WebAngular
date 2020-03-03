@@ -14,9 +14,7 @@ export class AuthGuardUlogovan implements CanActivate, CanActivateChild {
   role : any;
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
     
-    
-
-    if (!(localStorage.getItem('jwt') != "null" && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != "")) {
+    if (!(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != "")) {
       return true;
     }
     // not logged in so redirect to login page

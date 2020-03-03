@@ -46,13 +46,7 @@ namespace WebApp.Hubs
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             StringBuilder busData = new StringBuilder("");
-            //var stanice = unitOfWork.Stanica.GetAll();
-            //var linijaBr3 = unitOfWork.Linija.Get(6);
 
-            //var s = stanice.ToList();
-
-            //var ss = s[2];
-            //busData.Append($"{ss.X}_{ss.Y};");
 
             if (stanice != null)
             {
@@ -62,7 +56,6 @@ namespace WebApp.Hubs
                     stanicaBrojac = 0;
                 }
                 double[] niz = { stanice[stanicaBrojac].X, stanice[stanicaBrojac].Y };
-                //Clients.All.setRealTime(niz);
                 busData.Append($"{stanice[stanicaBrojac].X}_{stanice[stanicaBrojac].Y};");
                 Clients.All.getBusData(niz);
                 stanicaBrojac++;
@@ -75,13 +68,6 @@ namespace WebApp.Hubs
         private void Lokacija()
         {
             StringBuilder busData = new StringBuilder("");
-            //var stanice = unitOfWork.Stanica.GetAll();
-            //var linijaBr3 = unitOfWork.Linija.Get(6);
-
-            //var s = stanice.ToList();
-
-            //var ss = s[2];
-            //busData.Append($"{ss.X}_{ss.Y};");
 
             if (stanice != null)
             {
@@ -96,21 +82,6 @@ namespace WebApp.Hubs
                 stanicaBrojac++;
             }
 
-            //foreach(var s in stanice)
-            //{
-            //    var listaLinijaNaStaniciS = s.Linije.ToList();
-            //    foreach(var lin in listaLinijaNaStaniciS)
-            //    {
-            //        if(lin.Id == linijaBr3.Id)
-            //        {
-            //            busData.Append($"{s.X}_{s.Y};");
-            //            break;
-            //        }
-            //    }
-            //}
-
-
-            //Clients.Group("Admins").getBusData(busData.ToString());
         }
 
         public void StopLocationServerUpdates()
@@ -126,5 +97,9 @@ namespace WebApp.Hubs
             stanice = staniceIzKontrolera;
         }
 
+        public override Task OnConnected()
+        {
+            return base.OnConnected();
+        }
     }
 }

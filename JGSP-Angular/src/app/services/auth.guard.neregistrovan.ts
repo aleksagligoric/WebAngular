@@ -14,13 +14,13 @@ export class AuthGuardNeregistrovan implements CanActivate, CanActivateChild {
   role : any;
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
     
-    if (localStorage.getItem('jwt') != "null" && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != "") {
+    if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != "") {
       return true;
     }
     // not logged in so redirect to login page
     else {
       console.error("Can't access, not login");
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
       return false;
     }
   }
