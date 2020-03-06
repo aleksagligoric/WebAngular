@@ -40,6 +40,7 @@ import { AuthGuardControlor } from './services/auth.guard.controlor';
 import { AuthGuardUlogovan } from './services/auth.guard.ulogova';
 import { AuthGuardNeregistrovan } from './services/auth.guard.neregistrovan';
 import { LokacijaVozilaComponent } from './lokacija-vozila/lokacija-vozila.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 import { PaypalComponent } from './paypal/paypal.component';
 import { MainNavbarComponent } from './main-navbar/main-navbar.component';
 
@@ -65,6 +66,7 @@ const routes: Routes = [
     { path: "spojiStanicaLinija", component: SpojiStanicaLinijaComponent, canActivate: [AuthGuard] },
     { path: "izbrisiStanicu", component: ObrisiStanicaComponent, canActivate: [AuthGuard] },
     { path: "izbrisiLiniju", component: ObrisiLinijaComponent, canActivate: [AuthGuard] },
+    {path: "paypal", component: PaypalComponent, canActivate: [AuthGuard]},
     { path: "odobrimejl", component: OdobriMejlComponent, canActivate: [AuthGuardControlor] },
   { path: "**", redirectTo: "home" }
 ]
@@ -96,13 +98,14 @@ const routes: Routes = [
     ObrisiLinijaComponent,
     OdobriMejlComponent,
     LokacijaVozilaComponent,
-    PaypalComponent,
-    MainNavbarComponent
+    MainNavbarComponent,
+    PaypalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    NgxPayPalModule,
     HttpClientModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'}),

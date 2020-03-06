@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthHttpService } from 'src/app/services/auth.service';
+import { PaypalComponent} from './../paypal/paypal.component'
 //import { user } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,6 +8,7 @@ import { AuthHttpService } from 'src/app/services/auth.service';
   templateUrl: './karta.component.html',
   styleUrls: ['./karta.component.css']
 })
+
 export class KartaComponent implements OnInit {
   
   constructor(private http: AuthHttpService) { }

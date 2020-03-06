@@ -3,5 +3,4 @@
 </p>
 
 <!-- <input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;"> -->
-<h2 *ngIf="paypalLoad">Paypal button is loading</h2>
-<div #paypal></div>
+<ngx-paypal [config]="payPalConfig"></ngx-paypal>
