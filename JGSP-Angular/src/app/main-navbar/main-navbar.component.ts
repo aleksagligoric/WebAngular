@@ -26,7 +26,7 @@ export class MainNavbarComponent implements OnInit {
       if (data) {
         setTimeout(() => {
           this.readLocal();
-        }, 69);
+        }, 100);
         
       }
     })

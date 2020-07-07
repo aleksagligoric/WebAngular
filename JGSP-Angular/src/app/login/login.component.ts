@@ -18,18 +18,36 @@ export class LoginComponent implements OnInit {
 
   isLogin: boolean = false;
   loginToNavBar:LoginToNavbarService=new LoginToNavbarService();
+  isLoggedIn = false;
+  isBadLoginParams: boolean;
+  isOtherError: boolean;
+  errorDescription: string;
+  isError: boolean;
 
   ngOnInit() {
   }
 
   login(user: User, form: NgForm){
-    let l = this.http.logIn(user.username, user.password);
-    this.loginToNavBar.login();
-    form.resetForm();
+    this.http.logIn(user, (isLoggedIn, errorStatus, errorDescription) => {
+      console.log("sadsa"+isLoggedIn);
+      if(isLoggedIn){
 
-    this.service.newLogin.next(true);
-   
-    this.router.navigate(["/home"]);
+        //  console.log("login = " + l);
+          this.isError = false;
+          this.isLoggedIn = isLoggedIn;
+        //  this.loginToNavBar.login();
+          form.resetForm();
+         console.log(isLoggedIn);
+          this.service.newLogin.next(true);
+          this.router.navigate(["/home"]);
+         
+      }else{
+        this.isError = true;
+        this.errorDescription = errorDescription;
+        alert(errorDescription);
+      }
+
+  });
   
       
   }

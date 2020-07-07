@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RegUser, RegUserImg, Test, LinijaZaHub } from 'src/app/osoba';
+import { RegUser, RegUserImg, Test, LinijaZaHub, User } from 'src/app/osoba';
 import { Stanica } from 'src/app/osoba';
 import { RedVoznje } from 'src/app/osoba';
 import { CenovnikBindingModel } from 'src/app/osoba';
@@ -19,9 +19,9 @@ export class AuthHttpService{
   };
 
   user: string
-    logIn(username: string, password: string): Observable<boolean> | boolean{
+    logIn(user: User, callback: any){
         let isDone: boolean = false;
-        let data = `username=${username}&password=${password}&grant_type=password`;
+        let data = `username=${user.username}&password=${user.password}&grant_type=password`;
         let httpOptions = {
             headers: {
                 "Content-type": "application/x-www-form-urlencoded"
@@ -37,16 +37,23 @@ export class AuthHttpService{
   
             let role = decodedJwtData.role
             this.user = decodedJwtData.unique_name;
+            callback(true);
+        },
+        err=>{
+            console.log(err);
+            console.log(err.error.error_description);
+            callback(false, err.status, err.error.error_description);
         });
+        
+        // console.log("jwt: " + localStorage.jwt);
+        // if(localStorage.jwt == undefined || localStorage.jwt == "undefined"){
+        //     isDone = false;
+        // }
+        // else{
+        //     isDone = true;
+        // }
 
-        if(localStorage.jwt != "undefined"){
-            isDone = true;
-        }
-        else{
-            isDone = false;
-        }
-
-        return isDone;
+      //  return isDone;
         
     }
 

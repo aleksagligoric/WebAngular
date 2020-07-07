@@ -29,7 +29,7 @@ export class PrvaKomponentaComponent implements OnInit {
     this.http.getAll().subscribe((values) => this.values = values, err => console.log(err));
     //this.http.getName().subscribe((name) => this.name = name);  //strelica umesto metode razlika je u clouser-u
     this.clicks = 0;
-    this.auth.logIn("admin@yahoo.com", "Admin123!");
+  //  this.auth.logIn("admin@yahoo.com", "Admin123!");
   }
 
   clickCounter(){

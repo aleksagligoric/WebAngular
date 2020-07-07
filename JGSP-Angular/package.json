@@ -23,7 +23,7 @@
     "bootstrap": "^4.4.1",
     "emailjs": "^2.2.0",
     "emailjs-com": "^2.3.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "ngx-paypal": "^5.0.0",
     "rxjs": "~6.4.0",
     "save": "^2.4.0",

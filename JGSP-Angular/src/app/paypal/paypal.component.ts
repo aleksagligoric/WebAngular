@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
   })
 
   export class PaypalComponent implements OnInit {
-
     public payPalConfig?: IPayPalConfig;
 
     ngOnInit(): void {
@@ -17,30 +16,30 @@ import { Component, OnInit } from '@angular/core';
 
     private initConfig(): void {
       this.payPalConfig = {
-      currency: 'USD',
-      clientId: 'AedSEWYQXvOrqX06Th5mpq1aE6TFv1KQoiYAShjb2W5IRWUZEEWEuQdnijoEddBPOIx5qbYPI239-aKX',
+      currency: 'EUR',
+      clientId: 'sb',
       createOrderOnClient: (data) => <ICreateOrderRequest>{
         intent: 'CAPTURE',
         purchase_units: [
           {
             amount: {
-              currency_code: 'USD',
-              value: '1',
+              currency_code: 'EUR',
+              value: '9.99',
               breakdown: {
                 item_total: {
-                  currency_code: 'USD',
-                  value: '1'
+                  currency_code: 'EUR',
+                  value: '9.99'
                 }
               }
             },
             items: [
               {
-                name: 'Karta',
+                name: 'Enterprise Subscription',
                 quantity: '1',
                 category: 'DIGITAL_GOODS',
                 unit_amount: {
-                  currency_code: 'USD',
-                  value: '1',
+                  currency_code: 'EUR',
+                  value: '9.99',
                 },
               }
             ]
