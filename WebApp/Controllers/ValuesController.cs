@@ -60,13 +60,14 @@ namespace WebApp.Controllers
         }
         // POST api/values
         [AllowAnonymous]
-
-        [Route("Odobri/{mejl}")]
+        [Route("Odobri")]
+        [HttpPost]
         [ResponseType(typeof(string))]
-        public IHttpActionResult GetValues(string mejl)
+        public IHttpActionResult GetValues([FromBody] Dictionary<string, string> map)
         {
             IQueryable<ApplicationUser> acounti;
             acounti = db.Users.AsQueryable();
+            string mejl = map["mail"];
             ApplicationUser app = new ApplicationUser();
             foreach (ApplicationUser a in acounti)
             {
@@ -74,8 +75,6 @@ namespace WebApp.Controllers
                 {
                     app = a;
                 }
-             
-
             }
             app.Odobren = true;
             db.Entry(app).State = EntityState.Modified;
@@ -105,10 +104,6 @@ namespace WebApp.Controllers
                     }
                 }
             }
-
-
-
-
 
             return Ok("Odobrili ste mu registraciju!");
         }

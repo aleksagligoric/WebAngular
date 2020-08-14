@@ -31,7 +31,7 @@
         <div id="login">
           <p class="paragraf_text">Tip karte:</p><br>
             <p ><span class="fa "></span>
-                <select id="ButtonsHomePage" [(ngModel)]="tip" >
+                <select id="ButtonsHomePage" [(ngModel)]="tip" (change)="onChange(tip)">
                     <option *ngFor="let t of tipovi">
                       {{t}} 
                     </option>
@@ -43,7 +43,12 @@
           {{vaziDo1}}
           </p>
           <br>
-          <!-- <app-paypal></app-paypal> -->
+          <p class="paragraf_text">
+            Placajte paypal!
+          </p>
+          
+          <!-- <input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;"> -->
+          <ngx-paypal [config]="payPalConfig"></ngx-paypal>
           <br>
           <div class="clearfix"></div>
         </div>

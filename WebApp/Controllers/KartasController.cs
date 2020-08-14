@@ -144,21 +144,57 @@ namespace WebApp.Controllers
             return Ok(odgovor);
         }
 
-        // GET: api/Kartas/5
+        // POST: api/Kartas/5
         [AllowAnonymous]
         [ResponseType(typeof(string))]
-        [Route("GetKarta/{tipKarte}/{tipKupca}")]
-        public IHttpActionResult GetKartaCena(string tipKarte,string tipKupca)
+        [Route("GetKarta/")]
+        [HttpPost]
+        public IHttpActionResult GetKartaCena([FromBody] Dictionary<string, string> map)
         {
             List<CenaKarte> karte = Db.CenaKarte.GetAll().ToList();
             List<Cenovnik> cenovnici = Db.Cenovnik.GetAll().ToList();
+            List<ApplicationUser> korisnici = db.Users.ToList();
+            string tipKupca = korisnici.FirstOrDefault(x => x.UserName == map["mejl"]).Tip;
+            string tipKarte = map["tipKarte"];
+            Cenovnik cen = Db.Cenovnik.GetAll().Where(t => t.VaziDo > DateTime.UtcNow && t.VaziOd < DateTime.UtcNow).FirstOrDefault();
+            
+            //string odg = "Cena zeljene karte je : ";
+            string odg = "";
+            foreach(CenaKarte k in karte)
+            {
+                if (k.TipKarte == tipKarte && tipKupca == k.TipKupca && cen.IdCenovnik == k.CenovnikId)
+                {
+                    var cena = k.Cena / 117.2;
 
+                    odg += String.Format("{0:0.00}", cena);
+                }
+            }
+            //odg += " rsd.";
+            if (karte == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(odg);
+        }
+
+        // POST: api/Kartas/5
+        [AllowAnonymous]
+        [ResponseType(typeof(string))]
+        [Route("GetKarta2/")]
+        [HttpPost]
+        public IHttpActionResult GetKartaCena2([FromBody] Dictionary<string, string> map)
+        {
+            List<CenaKarte> karte = Db.CenaKarte.GetAll().ToList();
+            List<Cenovnik> cenovnici = Db.Cenovnik.GetAll().ToList();
+            string tipKupca = map["mejl"];
+            string tipKarte = map["tipKarte"];
             Cenovnik cen = Db.Cenovnik.GetAll().Where(t => t.VaziDo > DateTime.UtcNow && t.VaziOd < DateTime.UtcNow).FirstOrDefault();
 
             string odg = "Cena zeljene karte je : ";
-            foreach(CenaKarte k in karte)
+            foreach (CenaKarte k in karte)
             {
-                if(k.TipKarte == tipKarte && tipKupca == k.TipKupca && cen.IdCenovnik == k.CenovnikId)
+                if (k.TipKarte == tipKarte && tipKupca == k.TipKupca && cen.IdCenovnik == k.CenovnikId)
                 {
                     odg += k.Cena.ToString();
                 }
@@ -171,6 +207,7 @@ namespace WebApp.Controllers
 
             return Ok(odg);
         }
+
         [AllowAnonymous]
         [ResponseType(typeof(string))]
         [Route("GetKartaPromenaCene/{tipKarte}/{tipKupca}/{cena}")]
@@ -205,6 +242,7 @@ namespace WebApp.Controllers
         
             return Ok(odg);
         }
+        
         [AllowAnonymous]
         [ResponseType(typeof(Profil))]
         [Route("DobaviUsera")]
@@ -229,6 +267,7 @@ namespace WebApp.Controllers
             p.UserName = u.UserName;
             return Ok(p);
         }
+        
         [AllowAnonymous]
         [Route("PromeniProfil")]
         public IHttpActionResult PostKorisnika(RegisterBindingModel model)

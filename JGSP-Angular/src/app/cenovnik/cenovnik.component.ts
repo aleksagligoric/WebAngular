@@ -16,7 +16,7 @@ export class CenovnikComponent implements OnInit {
   ngOnInit() {
   }
   CenaKarte(){
-    this.http.GetCenaKarte(this.tip, this.tipPutnika).subscribe((cena)=>{
+    this.http.GetCenaKarte2(this.tip, this.tipPutnika).subscribe((cena)=>{
       this.cena1 = cena;
      
       err => console.log(err);

@@ -20,6 +20,8 @@ namespace WebApp.Models
         [ForeignKey("CenaKarte")]
         public int CenaKarteId { get; set; }
         public CenaKarte CenaKarte { get; set; }
+        [Timestamp]
+        public byte[] Timestamp { get; set; }
 
 
         public Karta() { }

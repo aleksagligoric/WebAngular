@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
       console.log("sadsa"+isLoggedIn);
       if(isLoggedIn){
 
-        //  console.log("login = " + l);
           this.isError = false;
           this.isLoggedIn = isLoggedIn;
         //  this.loginToNavBar.login();

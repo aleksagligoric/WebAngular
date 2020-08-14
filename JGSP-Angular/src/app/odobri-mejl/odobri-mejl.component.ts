@@ -10,7 +10,7 @@ import { AuthHttpService } from 'src/app/services/auth.service';
   styleUrls: ['./odobri-mejl.component.css']
 })
 export class OdobriMejlComponent implements OnInit {
-  mejloviZaView : number[];
+  mejloviZaView : string[];
   selectedLine : string;
   selectedMejl : string;
   odgovor : string;
@@ -23,8 +23,10 @@ export class OdobriMejlComponent implements OnInit {
       this.mejloviZaView = stanicesa;
       err => console.log(err);
     });
+    this.selectedMejl = this.mejloviZaView[0];
   }
   odobri(){
+    console.log("mail = " + this.selectedMejl)
     this.http.Odobri(this.selectedMejl).subscribe((stanicesa)=>{
       this.odgovor = stanicesa;
       err => console.log(err);

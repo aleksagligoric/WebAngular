@@ -53,143 +53,28 @@ namespace WebApp.Controllers
             IQueryable<Linija> linije = Db.Linija.GetAll().AsQueryable();
             var client = new HttpClient();
             var content = client.GetStringAsync("http://www.gspns.co.rs/red-voznje/ispis-polazaka?rv=rvg&vaziod=2020-01-04&dan=R&linija%5B%5D=4*");
-            //using (StreamReader r = new StreamReader("C:/Users/ervin/OneDrive/Desktop/WebAngular/podaci.json"))
-            //{
-            //    string json = "", linijaPodela = "";
-            //    //string[] linije;
-            //    //Stanica s = new Stanica();
-            //    //Linija l = new Linija();
-
-            //    while ((json = r.ReadLine()) != null)
-            //    {
-            //        string[] linijaNiz;
-            //        Stanica s = new Stanica();
-            //        //json = r.ReadLine();
-            //        linijaPodela = json.Split('|')[0];
-            //        linijaNiz = linijaPodela.Split(',', '[', ']');
-            //        s.Adresa = json.Split('|')[3];
-            //        string brojX = json.Split('|')[1];
-            //        string brojY = json.Split('|')[2];
-            //        s.X = double.Parse(brojX, CultureInfo.InvariantCulture);
-            //        s.Y = double.Parse(brojY, CultureInfo.InvariantCulture);
-            //        s.Naziv = s.Adresa = json.Split('|')[3];
-            //        s.Linije = new List<Linija>();
-            //        bool stanicaPostoji = false;
-            //        List<Linija> stanLinije = new List<Linija>();
-
-            //        foreach (var lin in linijaNiz)
-            //        {
-            //            if (lin != "" && lin != "    \"")
-            //            {
-            //                Linija l = new Linija() { RedniBroj = lin };
-            //                List<Linija> sveLinije = Db.Linija.GetAll().ToList();
-            //                bool linijaPostoji = false;
-
-            //                foreach (var linija in sveLinije)
-            //                {
-            //                    if (linija.RedniBroj == lin)
-            //                    {
-            //                        l = null;
-            //                        l = linija;
-            //                        linijaPostoji = true;
-            //                        break;
-            //                    }
-            //                }
-
-            //                if (linijaPostoji)
-            //                {
-            //                    //s.Linije.Add(l);
-            //                    //l.Stanice.Add(s);
-            //                    //Db.Linija.Update(l);
-            //                    //continue;
-            //                    List<Stanica> sveStanice = Db.Stanica.GetAll().ToList();
-            //                    foreach (var stanica in sveStanice)
-            //                    {
-            //                        if (stanica.Adresa == s.Adresa && stanica.X == s.X && stanica.Y == s.Y)
-            //                        {
-            //                            s = null;
-            //                            s = stanica;
-            //                            stanicaPostoji = true;
-            //                            break;
-            //                        }
-            //                    }
-
-            //                    if (stanicaPostoji)
-            //                    {
-            //                        l.Stanice.Add(s);
-            //                        s.Linije.Add(l);
-            //                        Db.Linija.Update(l);
-            //                        Db.Stanica.Update(s);
-            //                        //continue;
-            //                    }
-            //                    else
-            //                    {
-            //                        l.Stanice.Add(s);
-            //                        s.Linije.Add(l);
-            //                        Db.Linija.Update(l);
-            //                        Db.Stanica.Add(s);
-            //                    }
-            //                    Db.Complete();
-            //                }
-            //                else
-            //                {
-            //                    List<Stanica> sveStanice = Db.Stanica.GetAll().ToList();
-            //                    foreach (var stanica in sveStanice)
-            //                    {
-            //                        if (stanica.Adresa == s.Adresa)
-            //                        {
-            //                            s = null;
-            //                            s = stanica;
-            //                            stanicaPostoji = true;
-            //                            break;
-            //                        }
-            //                    }
-
-            //                    if (stanicaPostoji)
-            //                    {
-            //                        s.Linije.Add(l);
-            //                        Db.Stanica.Update(s);
-            //                        //Db.Stanica.Update(s);
-            //                        //continue;
-            //                    }
-            //                    else
-            //                    {
-            //                        s.Linije = new List<Linija>();
-            //                        s.Linije.Add(l);
-            //                        Db.Stanica.Add(s);
-            //                    }
-            //                    //s.Linije.Add(l);
-            //                    l.Stanice = new List<Stanica>();
-            //                    l.Stanice.Add(s);
-            //                    Db.Linija.Add(l);
-            //                    Db.Complete();
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            //var lajne = Db.Linija.GetAll();
-            //foreach (var lajna in lajne)
-            //{
-            //    RedVoznje rv1 = new RedVoznje();
-            //    rv1.DanUNedelji = "RADNI";
-            //    rv1.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-            //    RedVoznje rv2 = new RedVoznje();
-            //    rv2.DanUNedelji = "SUBOTA";
-            //    rv2.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-            //    RedVoznje rv3 = new RedVoznje();
-            //    rv3.DanUNedelji = "NEDELJA";
-            //    rv3.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
-            //    if (lajna.RedoviVoznje == null)
-            //    {
-            //        lajna.RedoviVoznje = new List<RedVoznje>();
-            //    }
-            //    lajna.RedoviVoznje.Add(rv3);
-            //    lajna.RedoviVoznje.Add(rv1);
-            //    lajna.RedoviVoznje.Add(rv2);
-            //}
-            //Db.Complete();
+            
+            var lajne = Db.Linija.GetAll();
+            foreach (var lajna in lajne)
+            {
+                RedVoznje rv1 = new RedVoznje();
+                rv1.DanUNedelji = "RADNI";
+                rv1.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+                RedVoznje rv2 = new RedVoznje();
+                rv2.DanUNedelji = "SUBOTA";
+                rv2.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+                RedVoznje rv3 = new RedVoznje();
+                rv3.DanUNedelji = "NEDELJA";
+                rv3.Polasci = "0430 \n0500 18 36 54\n0612 30 48\n0706 21 35 47";
+                if (lajna.RedoviVoznje == null)
+                {
+                    lajna.RedoviVoznje = new List<RedVoznje>();
+                }
+                lajna.RedoviVoznje.Add(rv3);
+                lajna.RedoviVoznje.Add(rv1);
+                lajna.RedoviVoznje.Add(rv2);
+            }
+            Db.Complete();
 
             string retvalue = "n";
             foreach (Linija l in linije)

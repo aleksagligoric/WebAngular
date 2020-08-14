@@ -126,7 +126,7 @@ namespace WebApp.Migrations
             //  to avoid creating duplicate seed data.
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
-                System.Diagnostics.Debugger.Launch();
+               // System.Diagnostics.Debugger.Launch();
             }
 
             Cenovnik cenovnik = new Cenovnik();

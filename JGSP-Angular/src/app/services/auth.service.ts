@@ -68,7 +68,11 @@ export class AuthHttpService{
         return this.http.get<any>(this.base_url + "/api/Values/GetZahtevi");
     }
     Odobri(mejl :string) : Observable<any>{
-        return this.http.get<any>(this.base_url + "/api/Values/Odobri/" + mejl);
+
+        var requestBody= {}
+        requestBody['mail']=mejl;
+
+        return this.http.post<any>(this.base_url + "/api/Values/Odobri/", requestBody, this.httpOptions);
     }
     DodajRedVoznje1(red : RedVoznje) : Observable<any>{
         return this.http.post<any>(this.base_url + "/api/Redovi/dodajRed" , red);
@@ -119,9 +123,24 @@ export class AuthHttpService{
         return this.http.get<any>(this.base_url + "/api/Linijas/GetLinija/" + id + "/" + dan + "/" + "str");
     }
 
-    GetCenaKarte(tip: string, tipPutnika: string): Observable<any>{
-        return this.http.get<any>(this.base_url + "/api/Kartas/GetKarta/" + tip + "/" + tipPutnika);
+    GetCenaKarte(tip: string, mail: string): Observable<any>{
+
+        var requestBody = new Test();
+        requestBody.tipKarte = tip;
+        requestBody.mejl = mail;
+
+        return this.http.post<any>(this.base_url + "/api/Kartas/GetKarta/", requestBody, this.httpOptions);
     }
+
+    GetCenaKarte2(tip: string, mail: string): Observable<any>{
+
+        var requestBody = new Test();
+        requestBody.tipKarte = tip;
+        requestBody.mejl = mail;
+
+        return this.http.post<any>(this.base_url + "/api/Kartas/GetKarta2/", requestBody, this.httpOptions);
+    }
+
     GetPromenaCene(tip: string, tipPutnika: string, cena : number): Observable<any>{
         return this.http.get<any>(this.base_url + "/api/Kartas/GetKartaPromenaCene/" + tip + "/" + tipPutnika + "/" + cena);
     }
